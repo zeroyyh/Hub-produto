@@ -9,24 +9,27 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 :root{
-  --paper:#F5F7F6;
+  --paper:#F4F5FA;
   --card:#FFFFFF;
-  --ink:#0B0D12;
-  --ink-soft:#565D6B;
-  --ink-mute:#9AA1AD;
-  --line:#E7E8E5;
-  --line-soft:#F0F1EE;
+  --ink:#12162B;
+  --ink-soft:#535A78;
+  --ink-mute:#9599B3;
+  --line:#E2E4F0;
+  --line-soft:#EEEFF8;
 
-  --accent:#0F766E;
-  --accent-hover:#0B5A54;
-  --accent-tint:#E2F3F1;
-  --accent-line:#B9E0DB;
+  --accent:#3346C4;
+  --accent-hover:#28379C;
+  --accent-tint:#EAEDFB;
+  --accent-line:#C7CDF2;
 
-  --red:#C22B3F; --red-tint:#FBE9EB; --red-line:#F0C3CA;
-  --amber:#B4650A; --amber-tint:#FBEDDC; --amber-line:#EDCEA0;
-  --blue:#1D6FB8; --blue-tint:#E8F1FA; --blue-line:#BFDAF0;
-  --green:#1F8256; --green-tint:#E4F5EC; --green-line:#BDE6D1;
-  --violet:#7C3AED; --violet-tint:#F3ECFE;
+  --bronze:#A8681E;
+  --bronze-tint:#FBF0DF;
+
+  --red:#BD3049; --red-tint:#FBEAEE; --red-line:#F0C4D0;
+  --amber:#A8681E; --amber-tint:#FBF0DF; --amber-line:#EDD3A6;
+  --blue:#2159A8; --blue-tint:#E9F0FA; --blue-line:#C0D6F0;
+  --green:#1C7A50; --green-tint:#E3F4EB; --green-line:#BCE2CD;
+  --violet:#6C3FCB; --violet-tint:#F0EBFC;
 
   --shadow-sm:0 1px 2px rgba(11,13,18,.05);
   --shadow-md:0 8px 24px rgba(11,13,18,.08);
@@ -42,42 +45,43 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 
 .app{display:grid;grid-template-columns:250px 1fr;min-height:100vh;}
 
-.sidebar{background:#0C1D1B;border-right:1px solid #0C1D1B;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
-.sidebar-logo{display:flex;align-items:center;gap:10px;padding:6px 8px 20px;}
-.logo-mark{width:30px;height:30px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.sidebar{background:#0D1026;border-right:1px solid #0D1026;padding:20px 14px;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sidebar-logo{display:flex;align-items:center;gap:10px;padding:6px 8px 22px;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:16px;}
+.logo-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(155deg,#4459DD,#3346C4);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .logo-mark svg{width:16px;height:16px;color:#fff;}
-.sidebar-logo .title{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;line-height:1.15;color:#F2F7F6;}
-.sidebar-logo .sub{font-size:11px;color:#6E8B87;margin-top:1px;}
+.sidebar-logo .title{font-family:'Sora',sans-serif;font-size:15px;font-weight:700;line-height:1.15;color:#F5F6FC;}
+.sidebar-logo .sub{font-size:11px;color:#7379A0;margin-top:1px;letter-spacing:.02em;}
 
 .nav-group{margin-bottom:4px;}
-.nav-group-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#5E7B77;padding:16px 10px 6px;font-weight:600;}
+.nav-group-label{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:#565D82;padding:16px 10px 6px;font-weight:600;}
 .nav-item{
-  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:9px;cursor:pointer;
-  font-size:13.5px;color:#A9C2BE;font-weight:500;margin-bottom:2px;transition:background .12s,color .12s;
+  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;cursor:pointer;
+  font-size:13.5px;color:#A6ABCC;font-weight:500;margin-bottom:2px;transition:background .12s,color .12s;
+  border-left:2px solid transparent;
 }
-.nav-item:hover{background:rgba(255,255,255,.06);color:#F2F7F6;}
-.nav-item.active{background:var(--accent);color:#fff;}
+.nav-item:hover{background:rgba(255,255,255,.05);color:#F5F6FC;}
+.nav-item.active{background:rgba(68,89,221,.15);color:#E4E7FC;border-left:2px solid #6C7EEE;}
 .nav-item svg{width:16px;height:16px;flex-shrink:0;}
-.nav-item.disabled{color:#5E7B77;cursor:default;}
-.nav-item.disabled:hover{background:none;color:#5E7B77;}
-.soon-badge{font-size:9px;background:rgba(255,255,255,.08);color:#6E8B87;padding:2px 6px;border-radius:100px;margin-left:auto;letter-spacing:.03em;font-weight:600;}
+.nav-item.disabled{color:#565D82;cursor:default;}
+.nav-item.disabled:hover{background:none;color:#565D82;}
+.soon-badge{font-size:9px;background:rgba(255,255,255,.08);color:#7379A0;padding:2px 6px;border-radius:100px;margin-left:auto;letter-spacing:.03em;font-weight:600;}
 
-.main{padding:28px 42px 90px;max-width:1220px;}
-.main-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:24px;gap:16px;flex-wrap:wrap;}
-.main-header .eyebrow{font-size:11.5px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700;margin-bottom:6px;}
-.main-header h1{font-size:26px;font-weight:700;letter-spacing:-.01em;}
+.main{padding:32px 44px 90px;max-width:1220px;}
+.main-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;gap:16px;flex-wrap:wrap;padding-bottom:22px;border-bottom:1px solid var(--line);}
+.main-header h1{font-size:27px;font-weight:700;letter-spacing:-.015em;}
 .main-header p{margin:8px 0 0;color:var(--ink-soft);font-size:14px;max-width:540px;}
 
-.btn{border-radius:10px;padding:11px 18px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:7px;border:1px solid transparent;}
-.btn-primary{background:var(--accent);color:#fff;}
+.btn{border-radius:9px;padding:11px 18px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;display:inline-flex;align-items:center;gap:7px;border:1px solid transparent;transition:background .12s,border-color .12s,transform .08s;}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(51,70,196,.25),0 4px 12px rgba(51,70,196,.18);}
 .btn-primary:hover{background:var(--accent-hover);}
-.btn-primary:disabled{opacity:.6;cursor:default;}
+.btn-primary:active{transform:translateY(1px);}
+.btn-primary:disabled{opacity:.6;cursor:default;box-shadow:none;}
 .btn-ghost{background:transparent;border-color:var(--line);color:var(--ink-soft);}
 .btn-ghost:hover{border-color:var(--ink-mute);color:var(--ink);}
 .btn-danger{background:transparent;border-color:var(--red-line);color:var(--red);}
 .btn-danger:hover{background:var(--red-tint);}
 .btn-ai{background:var(--violet-tint);color:var(--violet);border-color:transparent;}
-.btn-ai:hover{background:#e9dcfd;}
+.btn-ai:hover{background:#e4d9fb;}
 .btn-sm{padding:7px 12px;font-size:12.5px;}
 
 .view{display:none;}
@@ -103,7 +107,7 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .tag{font-size:10.5px;color:var(--ink-soft);background:var(--line-soft);padding:3px 9px;border-radius:6px;font-weight:600;}
 .tag-empresa-linkpay{background:var(--blue-tint);color:var(--blue);}
 .tag-empresa-infiniti{background:var(--violet-tint);color:var(--violet);}
-.badge{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:100px;white-space:nowrap;text-transform:uppercase;letter-spacing:.02em;}
+.badge{font-size:10.5px;font-weight:700;padding:4px 10px;border-radius:100px;white-space:nowrap;letter-spacing:.02em;}
 .badge-blue{background:var(--blue-tint);color:var(--blue);}
 .badge-green{background:var(--green-tint);color:var(--green);}
 .badge-amber{background:var(--amber-tint);color:var(--amber);}
@@ -111,14 +115,16 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .badge-violet{background:var(--violet-tint);color:var(--violet);}
 .badge-teal{background:#DDF3F0;color:#0F766E;}
 .badge-rose{background:#FCE8EF;color:#BE1257;}
-.badge-indigo{background:#E7EAFB;color:#3A46C4;}
+.badge-indigo{background:var(--accent-tint);color:var(--accent);}
 .badge-red{background:var(--red-tint);color:var(--red);}
-.gut-chip{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;background:#0C1D1B;color:#8FD9CF;padding:3px 8px;border-radius:6px;}
+.gut-chip{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;background:#241505;color:#E8B876;padding:3px 8px;border-radius:6px;}
+.ref-chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;background:var(--bronze-tint);color:var(--bronze);padding:3px 9px;border-radius:6px;}
 
-.inc-card{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--line);border-radius:12px;padding:15px 19px;box-shadow:var(--shadow-sm);cursor:pointer;margin-bottom:10px;transition:border-color .12s;}
+.inc-card{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--line);border-radius:12px;padding:16px 20px;box-shadow:var(--shadow-sm);cursor:pointer;margin-bottom:10px;transition:border-color .12s,box-shadow .12s,transform .08s;}
+.inc-card:hover{box-shadow:var(--shadow-md);transform:translateY(-1px);}
 .inc-card.sev-highest{border-left-color:var(--red);}
 .inc-card.sev-high{border-left-color:var(--amber);}
-.inc-card.sev-medium{border-left-color:var(--blue);}
+.inc-card.sev-medium{border-left-color:var(--accent);}
 .inc-card.sev-low{border-left-color:var(--ink-mute);}
 .inc-card.sev-lowest{border-left-color:var(--line);}
 .inc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
@@ -148,19 +154,13 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .search-hero input{flex:1;padding:13px 16px;border:1px solid var(--line);border-radius:12px;font-size:14.5px;font-family:'Inter',sans-serif;background:var(--card);color:var(--ink);}
 .search-hero input:focus{outline:2px solid var(--accent-tint);border-color:var(--accent);}
 .search-hint{font-size:12px;color:var(--ink-mute);margin-top:10px;}
-.busca-resumo-box{background:var(--violet-tint);border:1px solid #E1D3FB;border-radius:12px;padding:15px 18px;font-size:13.5px;line-height:1.65;color:var(--ink);white-space:pre-wrap;}
-.busca-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 19px;box-shadow:var(--shadow-sm);margin-bottom:10px;}
-.busca-card .bc-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
-.busca-card .bc-key{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:600;color:var(--accent);}
-.busca-card .bc-title{font-size:14.5px;font-weight:600;margin-top:3px;line-height:1.35;}
-.busca-card .bc-body{font-size:13px;color:var(--ink-soft);margin-top:8px;line-height:1.6;white-space:pre-wrap;}
-.busca-card .bc-foot{margin-top:11px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;}
+
 .soon-view{padding:70px 20px;text-align:center;}
 .soon-view .icon-wrap{width:56px;height:56px;border-radius:16px;background:var(--accent-tint);color:var(--accent);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;}
 .soon-view h2{font-size:20px;margin-bottom:8px;}
 .soon-view p{color:var(--ink-soft);font-size:13.5px;max-width:420px;margin:0 auto;}
 
-.overlay{position:fixed;inset:0;background:rgba(11,13,18,.5);display:none;align-items:flex-start;justify-content:center;z-index:100;overflow-y:auto;padding:40px 20px;}
+.overlay{position:fixed;inset:0;background:rgba(13,16,38,.55);display:none;align-items:flex-start;justify-content:center;z-index:100;overflow-y:auto;padding:40px 20px;}
 .overlay.open{display:flex;}
 .modal{background:var(--card);border-radius:18px;max-width:680px;width:100%;padding:28px 30px 26px;box-shadow:var(--shadow-lg);}
 .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px;}
@@ -207,14 +207,14 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .detail-title{font-size:22px;font-weight:700;}
 .detail-meta{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 6px;}
 .detail-section{margin:20px 0;}
-.detail-section h4{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-mute);margin-bottom:9px;font-weight:700;}
+.detail-section h4{font-size:12.5px;letter-spacing:.01em;color:var(--ink-mute);margin-bottom:9px;font-weight:600;}
 .detail-section p{font-size:13.5px;line-height:1.65;color:var(--ink);white-space:pre-wrap;margin:0;}
 .criteria-list{list-style:none;margin:0;padding:0;}
 .criteria-list li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;padding:7px 0;border-bottom:1px solid var(--line-soft);}
 .criteria-list li:last-child{border-bottom:none;}
 .crit-check{width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line);flex-shrink:0;margin-top:1px;}
 .jira-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--accent);text-decoration:none;background:var(--accent-tint);padding:8px 13px;border-radius:9px;}
-.jira-link:hover{background:#e3e0fa;}
+.jira-link:hover{background:#DBE1F6;}
 
 .timeline{border-top:1px solid var(--line-soft);padding-top:12px;}
 .timeline-item{padding:9px 0;border-bottom:1px solid var(--line-soft);}
@@ -258,45 +258,10 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
     </div>
 
     <div class="nav-group">
-      <div class="nav-item" data-view="dashboard">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
-        <span>Visão geral</span>
-      </div>
-    </div>
-
-    <div class="nav-group">
       <div class="nav-group-label">Núcleo de trabalho</div>
-      <div class="nav-item" data-view="ins">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 3h8l4 4v14H7z"/><path d="M15 3v4h4"/><path d="M9.5 12h6M9.5 15.5h6M9.5 8.5h3"/></svg>
-        <span>IN's</span>
-      </div>
-      <div class="nav-item" data-view="incidentes">
+      <div class="nav-item active" data-view="incidentes">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></svg>
         <span>Incidentes</span>
-      </div>
-      <div class="nav-item" data-view="regras">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 5.5C4 4 5 3 7 3h6v18H7c-2 0-3-1-3-2.5z"/><path d="M13 3h4c2 0 3 1 3 2.5V19c0 1.5-1 2.5-3 2.5h-4"/></svg>
-        <span>Regras de negócio</span>
-      </div>
-      <div class="nav-item" data-view="busca">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-        <span>Busca no histórico</span>
-      </div>
-    </div>
-
-    <div class="nav-group">
-      <div class="nav-group-label">Em breve</div>
-      <div class="nav-item disabled" data-soon="Dashboard executivo" data-desc="INs por plataforma, tempo médio em QA, tempo até homologação, bugs por release, demandas por solicitante e por módulo — para retrospectivas e planejamento.">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
-        <span>Dashboard executivo</span><span class="soon-badge">em breve</span>
-      </div>
-      <div class="nav-item disabled" data-soon="Biblioteca de casos de teste" data-desc="Casos de teste padronizados por fluxo, reutilizáveis em cada homologação.">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="m9 12 2 2 4-4"/><rect x="3" y="3" width="18" height="18" rx="3"/></svg>
-        <span>Casos de teste</span><span class="soon-badge">em breve</span>
-      </div>
-      <div class="nav-item disabled" data-soon="Fluxogramas das plataformas" data-desc="Mapas visuais dos fluxos do ADMIN, B2B e B2C — de ambas as empresas.">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="12" cy="18" r="2.5"/><path d="M8 7.5 12 16M16 7.5 12 16"/></svg>
-        <span>Fluxogramas</span><span class="soon-badge">em breve</span>
       </div>
     </div>
 
@@ -310,49 +275,9 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 
   <main class="main">
 
-    <div class="view active" id="view-dashboard">
+    <div class="view active" id="view-incidentes">
       <div class="main-header">
         <div>
-          <div class="eyebrow">Visão geral</div>
-          <h1>Bom trabalho por aqui</h1>
-          <p>Panorama do que está em andamento nos três núcleos ativos do hub.</p>
-        </div>
-        <div style="display:flex;gap:10px;">
-          <button class="btn btn-ghost" id="btn-exportar">Exportar backup</button>
-          <button class="btn btn-ghost" id="btn-importar">Importar dados</button>
-          <input type="file" id="import-file" accept=".json,application/json" style="display:none">
-        </div>
-      </div>
-      <div class="stats-row" id="dash-stats"></div>
-      <div class="section-label" style="border:none;padding:0;margin:0 0 12px;">Últimas atualizações</div>
-      <div class="doc-list" id="dash-recent"></div>
-    </div>
-
-    <div class="view" id="view-ins">
-      <div class="main-header">
-        <div>
-          <div class="eyebrow">Núcleo de trabalho</div>
-          <h1>IN's</h1>
-          <p>Instruções normativas com estrutura padronizada — resumo, cenários, critérios de aceite, casos de teste e Score GUT.</p>
-        </div>
-        <button class="btn btn-primary" id="btn-new-in">+ Nova IN</button>
-      </div>
-      <div class="toolbar">
-        <div class="tb-filters">
-          <input type="text" id="in-search" placeholder="Buscar por título ou chave Jira...">
-          <select id="in-f-empresa"><option value="">Todas as empresas</option><option>LinkPay</option><option>Infiniti</option><option>Ambos</option><option>Não definida</option></select>
-          <select id="in-f-sistema"><option value="">Todos os sistemas</option><option>ADMIN</option><option>B2B</option><option>B2C</option><option>N/A</option></select>
-          <select id="in-f-status"><option value="">Todos os status</option><option>Backlog</option><option>[DEV] - A FAZER</option><option>[DIR] - DEFINIR PROCESSOS</option><option>[DEV] - FAZENDO</option><option>[OP] - EM VALIDAÇÃO / PITA</option><option>[DIR] - ENVIADO PARA VALIDAÇÃO</option><option>FILA DE DEPLOY</option><option>Concluído</option></select>
-        </div>
-        <span class="results-count" id="in-count"></span>
-      </div>
-      <div class="doc-list" id="in-list"></div>
-    </div>
-
-    <div class="view" id="view-incidentes">
-      <div class="main-header">
-        <div>
-          <div class="eyebrow">Núcleo de trabalho</div>
           <h1>Incidentes</h1>
           <p>Abertura e acompanhamento de problemas identificados em produção ou homologação.</p>
         </div>
@@ -371,152 +296,7 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
       <div id="inc-list"></div>
     </div>
 
-    <div class="view" id="view-regras">
-      <div class="main-header">
-        <div>
-          <div class="eyebrow">Núcleo de trabalho</div>
-          <h1>Regras de negócio</h1>
-          <p>Cada regra vigente, numerada como artigo — a origem oficial de "por que o sistema funciona assim".</p>
-        </div>
-        <button class="btn btn-primary" id="btn-new-regra">+ Nova regra</button>
-      </div>
-      <div class="toolbar">
-        <div class="tb-filters"><input type="text" id="reg-search" placeholder="Buscar por título ou conteúdo..."></div>
-        <span class="results-count" id="reg-count"></span>
-      </div>
-      <div class="rules-shell">
-        <div class="rules-nav" id="rules-nav"></div>
-        <div id="reg-list"></div>
-      </div>
-    </div>
-
-    <div class="view" id="view-busca">
-      <div class="main-header">
-        <div>
-          <div class="eyebrow">Núcleo de trabalho</div>
-          <h1>Busca no histórico</h1>
-          <p>Pesquise um tema e veja tudo que já foi registrado no portal antes de abrir uma demanda nova — evita duplicadas.</p>
-        </div>
-      </div>
-      <div class="search-hero">
-        <input type="text" id="busca-input" placeholder="Ex: antecipação, extrato de beneficiários, boleto errado no extrato...">
-        <button class="btn btn-primary" id="busca-btn">Buscar</button>
-      </div>
-      <div class="search-hint">Busca em todas as IN's, incidentes e regras cadastrados no portal. Palavras genéricas (problema, erro, bug) são ignoradas para manter a precisão.</div>
-      
-      <div id="busca-resumo" style="display:none;margin-top:20px;"></div>
-      <div id="busca-resultados" style="margin-top:16px;"></div>
-    </div>
-
-    <div class="view" id="view-soon">
-      <div class="soon-view">
-        <div class="icon-wrap" id="soon-icon"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div>
-        <h2 id="soon-title">Módulo em construção</h2>
-        <p id="soon-desc"></p>
-      </div>
-    </div>
-
   </main>
-</div>
-
-<!-- MODAL: IN form -->
-<div class="overlay" id="overlay-in-form">
-  <div class="modal">
-    <div class="modal-head"><h2 id="in-form-title">Nova IN</h2><button class="modal-close" data-close="overlay-in-form">&times;</button></div>
-    <form id="in-form" onsubmit="return false">
-      <input type="hidden" id="in-edit-id">
-
-      <div class="form-row" style="margin-top:18px;"><label>Título</label><input type="text" id="in-titulo" required placeholder="Ex: Filtro por CPF no B2C"></div>
-      <div class="form-row three">
-        <div><label>Empresa</label><select id="in-empresa"><option>LinkPay</option><option>Infiniti</option><option>Ambos</option><option>Não definida</option></select></div>
-        <div><label>Sistema</label><select id="in-sistema"><option>ADMIN</option><option>B2B</option><option>B2C</option><option>N/A</option></select></div>
-        <div><label>Status</label><select id="in-status"><option>Backlog</option><option>[DEV] - A FAZER</option><option>[DIR] - DEFINIR PROCESSOS</option><option>[DEV] - FAZENDO</option><option>[OP] - EM VALIDAÇÃO / PITA</option><option>[DIR] - ENVIADO PARA VALIDAÇÃO</option><option>FILA DE DEPLOY</option><option>Concluído</option></select></div>
-      </div>
-      <div class="form-row two">
-        <div><label>Prioridade <span class="hint">escala do Jira</span></label>
-          <select id="in-prioridade">
-            <option value="Highest">Altíssima</option>
-            <option value="High">Alta</option>
-            <option value="Medium" selected>Média</option>
-            <option value="Low">Baixa</option>
-            <option value="Lowest">Baixíssima</option>
-          </select>
-        </div>
-        <div><label>Solicitante</label><input type="text" id="in-solicitante" placeholder="Quem pediu"></div>
-      </div>
-      <div class="form-row two">
-        <div><label>Chave Jira <span class="hint">ex: IN-199</span></label><input type="text" id="in-jirakey" placeholder="IN-199"></div>
-        <div><label>Link do Jira</label><input type="text" id="in-jiraurl" placeholder="gerado automaticamente"></div>
-      </div>
-
-      <div class="section-label">Resumo</div>
-      <div class="form-row"><textarea id="in-resumo" placeholder="Resumo em uma frase."></textarea></div>
-
-      <div class="section-label">Descrição</div>
-      <div class="form-row"><textarea id="in-descricao" placeholder="Descrição completa do que essa IN resolve."></textarea></div>
-
-      <div class="form-row two">
-        <div><label>Cenário atual</label><textarea id="in-cenario-atual" placeholder="Como funciona hoje."></textarea></div>
-        <div><label>Cenário esperado</label><textarea id="in-cenario-esperado" placeholder="Como deveria funcionar."></textarea></div>
-      </div>
-
-      <div class="section-label">Critérios de aceite</div>
-      <div class="form-row checklist-editor" id="in-criterios-editor"></div>
-      <button type="button" class="add-criterio" id="in-add-criterio">+ Adicionar critério</button>
-
-      <div class="section-label">Casos de teste</div>
-      <div class="form-row checklist-editor" id="in-testes-editor"></div>
-      <button type="button" class="add-criterio" id="in-add-teste">+ Adicionar caso de teste</button>
-
-      <div class="section-label">Score GUT <span class="hint">Gravidade × Urgência × Tendência, escala 1–5, resultado de 0 a 125</span></div>
-      <div class="form-row gut-row">
-        <div><label>Gravidade</label><select id="in-gut-g"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
-        <div><label>Urgência</label><select id="in-gut-u"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
-        <div><label>Tendência</label><select id="in-gut-t"><option value="1">1</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5</option></select></div>
-        <div class="gut-score"><span class="lbl">Score</span><span id="in-gut-score">27</span></div>
-      </div>
-
-      <div class="section-label">Regras de negócio aplicáveis</div>
-      <div class="form-row"><textarea id="in-regras" placeholder="Regras envolvidas — pode referenciar artigos da biblioteca (ex: Art. 4º)."></textarea></div>
-
-      <div class="section-label">Escopo</div>
-      <div class="form-row"><textarea id="in-escopo" placeholder="Quais telas, fluxos ou áreas são afetados."></textarea></div>
-
-      <div class="form-actions">
-        <button type="button" class="btn btn-ghost" data-close="overlay-in-form">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="in-save-btn">Salvar IN</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- MODAL: IN detail -->
-<div class="overlay" id="overlay-in-detail">
-  <div class="modal" style="max-width:680px;">
-    <div class="modal-head">
-      <div><div class="detail-doc-num mono" id="ind-num"></div><h2 class="detail-title" id="ind-title"></h2></div>
-      <button class="modal-close" data-close="overlay-in-detail">&times;</button>
-    </div>
-    <div class="detail-meta" id="ind-meta"></div>
-    <div id="ind-jira-wrap" style="margin:14px 0 4px;"></div>
-    <div id="ind-jira-create-wrap" style="margin:0 0 4px;"></div>
-    <div class="detail-section" id="ind-resumo-wrap"><h4>Resumo</h4><p id="ind-resumo"></p></div>
-    <div class="detail-section" id="ind-desc-wrap"><h4>Descrição</h4><p id="ind-desc"></p></div>
-    <div class="detail-section" id="ind-cenarios-wrap" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-      <div><h4>Cenário atual</h4><p id="ind-cen-atual"></p></div>
-      <div><h4>Cenário esperado</h4><p id="ind-cen-esperado"></p></div>
-    </div>
-    <div class="detail-section" id="ind-crit-wrap"><h4>Critérios de aceite</h4><ul class="criteria-list" id="ind-criterios"></ul></div>
-    <div class="detail-section" id="ind-testes-wrap"><h4>Casos de teste</h4><ul class="criteria-list" id="ind-testes"></ul></div>
-    <div class="detail-section" id="ind-regras-wrap"><h4>Regras de negócio aplicáveis</h4><p id="ind-regras"></p></div>
-    <div class="detail-section" id="ind-esc-wrap"><h4>Escopo</h4><p id="ind-esc"></p></div>
-    <div class="detail-section">
-      <h4>Histórico</h4>
-      <div class="timeline" id="ind-timeline"></div>
-      <div class="timeline-add"><textarea id="ind-new-note" placeholder="Adicionar observação..."></textarea><button class="btn btn-ghost btn-sm" id="ind-add-note">Adicionar</button></div>
-    </div>
-    <div class="detail-actions"><button class="btn btn-danger" id="ind-delete">Excluir</button><button class="btn btn-primary" id="ind-edit">Editar</button></div>
-  </div>
 </div>
 
 <!-- MODAL: Incidente form -->
@@ -541,9 +321,27 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
       </div>
       <div class="form-row three">
         <div><label>Data do incidente</label><input type="date" id="inc-data"></div>
+        <div><label>Data do relato <span class="hint">quando foi reportado</span></label><input type="date" id="inc-data-relato"></div>
         <div><label>Status</label><select id="inc-status"><option>Aberto</option><option>Investigando</option><option>Resolvido</option></select></div>
-        <div><label>Chave Jira</label><input type="text" id="inc-jirakey" placeholder="IN-354"></div>
       </div>
+      <div class="form-row three">
+        <div><label>Solicitante</label><input type="text" id="inc-solicitante" placeholder="Quem reportou"></div>
+        <div><label>Categoria</label>
+          <select id="inc-categoria">
+            <option value="">Não categorizado</option>
+            <option>Baixa/status de pagamento de boletos</option>
+            <option>Transferências e PIX</option>
+            <option>Erros de interface do portal</option>
+            <option>Mensageria (e-mails e tokens)</option>
+            <option>Integração API / CV CRM</option>
+            <option>Cadastro de beneficiários</option>
+            <option>Configuração bancária</option>
+            <option>Outros</option>
+          </select>
+        </div>
+        <div><label>Protocolo/Referência <span class="hint">opcional</span></label><input type="text" id="inc-protocolo" placeholder="Nº protocolo, CPF, pedido..."></div>
+      </div>
+      <div class="form-row"><label>Chave Jira</label><input type="text" id="inc-jirakey" placeholder="IN-354"></div>
       <div class="form-row"><label>Link do Jira</label><input type="text" id="inc-jiraurl" placeholder="gerado automaticamente"></div>
       <div class="form-row"><label>Descrição do problema</label><textarea id="inc-descricao" placeholder="O que está acontecendo."></textarea></div>
       <div class="form-row"><label>Impacto</label><textarea id="inc-impacto" placeholder="Quem e o que é afetado."></textarea></div>
@@ -574,42 +372,6 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
       <div class="timeline-add"><textarea id="incd-new-note" placeholder="Adicionar atualização..."></textarea><button class="btn btn-ghost btn-sm" id="incd-add-note">Adicionar</button></div>
     </div>
     <div class="detail-actions"><button class="btn btn-danger" id="incd-delete">Excluir</button><button class="btn btn-primary" id="incd-edit">Editar</button></div>
-  </div>
-</div>
-
-<!-- MODAL: Regra form -->
-<div class="overlay" id="overlay-reg-form">
-  <div class="modal">
-    <div class="modal-head"><h2 id="reg-form-title">Nova regra</h2><button class="modal-close" data-close="overlay-reg-form">&times;</button></div>
-    <form id="reg-form" onsubmit="return false">
-      <input type="hidden" id="reg-edit-id">
-      <div class="form-row"><label>Título da regra</label><input type="text" id="reg-titulo" required placeholder="Ex: Cálculo de tarifa de antecipação"></div>
-      <div class="form-row three">
-        <div><label>Empresa</label><select id="reg-empresa"><option>LinkPay</option><option>Infiniti</option><option>Ambos</option></select></div>
-        <div><label>Sistema</label><select id="reg-sistema"><option>ADMIN</option><option>B2B</option><option>B2C</option></select></div>
-        <div><label>Categoria</label><input type="text" id="reg-categoria" placeholder="Ex: Split, Premiação"></div>
-      </div>
-      <div class="form-row"><label>Texto da regra</label><textarea id="reg-texto" style="min-height:110px;" placeholder="Descreva a regra por completo."></textarea></div>
-      <div class="form-row"><label>IN de origem <span class="hint">opcional</span></label><input type="text" id="reg-origem" placeholder="Ex: IN-150"></div>
-      <div class="form-actions">
-        <button type="button" class="btn btn-ghost" data-close="overlay-reg-form">Cancelar</button>
-        <button type="button" class="btn btn-primary" id="reg-save-btn">Salvar regra</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<!-- MODAL: Regra detail -->
-<div class="overlay" id="overlay-reg-detail">
-  <div class="modal" style="max-width:600px;">
-    <div class="modal-head">
-      <div><div class="article-num" id="regd-num" style="margin-bottom:4px;"></div><h2 class="detail-title" id="regd-title" style="font-size:19px;"></h2></div>
-      <button class="modal-close" data-close="overlay-reg-detail">&times;</button>
-    </div>
-    <div class="detail-meta" id="regd-meta"></div>
-    <div class="detail-section"><p id="regd-texto"></p></div>
-    <div class="detail-section" id="regd-origem-wrap"><h4>IN de origem</h4><p id="regd-origem"></p></div>
-    <div class="detail-actions"><button class="btn btn-danger" id="regd-delete">Excluir</button><button class="btn btn-primary" id="regd-edit">Editar</button></div>
   </div>
 </div>
 
@@ -645,11 +407,9 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 // ========================================================
 
 
-const KEYS = { ins:'portal-ins-v2', incidentes:'portal-incidentes-v2', regras:'portal-regras-v2' };
-let ins = [], incidentes = [], regras = [];
-let currentInId=null, currentIncId=null, currentRegId=null;
-let activeRulesFilter = '';
-let criteriosState = [], testesState = [];
+const KEYS = { incidentes:'portal-incidentes-v2' };
+let incidentes = [];
+let currentIncId=null;
 
 function uid(){ return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
@@ -704,76 +464,21 @@ async function kvSet(key, value){
   if(error) throw error;
 }
 async function loadAll(){
-  try{ ins = (await kvGet(KEYS.ins)) || []; }catch(e){ ins=[]; }
   try{ incidentes = (await kvGet(KEYS.incidentes)) || []; }catch(e){ incidentes=[]; }
-  try{ regras = (await kvGet(KEYS.regras)) || []; }catch(e){ regras=[]; }
   let fixed = false;
-  [ins, incidentes].forEach(arr=>arr.forEach(x=>{
+  incidentes.forEach(x=>{
     if(x.jiraKey){
       const nk = normalizeJiraKey(x.jiraKey);
       const nu = autoJiraUrl(nk);
       if(nk !== x.jiraKey || nu !== x.jiraUrl){ x.jiraKey = nk; x.jiraUrl = nu; fixed = true; }
     }
-  }));
-  ins.forEach(x=>{ if(STATUS_LEGACY[x.status]){ x.status = STATUS_LEGACY[x.status]; fixed = true; } });
-  if(fixed){ await saveIns(); await saveIncidentes(); }
-  renderDashboard(); renderIns(); renderIncidentes(); renderRegras();
+  });
+  if(fixed){ await saveIncidentes(); }
+  renderIncidentes();
 }
-async function saveIns(){ try{ await kvSet(KEYS.ins, ins); }catch(e){ showToast('Erro ao salvar: '+(e.message||'')); } }
 async function saveIncidentes(){ try{ await kvSet(KEYS.incidentes, incidentes); }catch(e){ showToast('Erro ao salvar: '+(e.message||'')); } }
-async function saveRegras(){ try{ await kvSet(KEYS.regras, regras); }catch(e){ showToast('Erro ao salvar: '+(e.message||'')); } }
-function baixarArquivo(nome, conteudo){
-  const blob = new Blob([conteudo], {type:'application/json'});
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(blob); a.download = nome; a.click();
-  URL.revokeObjectURL(a.href);
-}
-document.getElementById('btn-exportar').addEventListener('click', ()=>{
-  baixarArquivo('hub-produto-backup-'+new Date().toISOString().slice(0,10)+'.json',
-    JSON.stringify({ ins, incidentes, regras, exportadoEm: new Date().toISOString() }, null, 1));
-  showToast('Backup exportado');
-});
-document.getElementById('btn-importar').addEventListener('click', ()=>document.getElementById('import-file').click());
-document.getElementById('import-file').addEventListener('change', async (e)=>{
-  const file = e.target.files[0]; e.target.value = '';
-  if(!file) return;
-  let dados;
-  try{ dados = JSON.parse(await file.text()); }
-  catch(err){ showToast('Arquivo inválido — selecione um JSON do hub'); return; }
-
-  if(Array.isArray(dados)){
-    // Lista de IN's (ex.: jira-dados.json) — mescla sem duplicar
-    const existentes = new Set(ins.map(x=>x.jiraKey||x.id).filter(Boolean));
-    const novas = dados.filter(s=>!existentes.has(s.jiraKey||s.id));
-    if(novas.length===0){ showToast('Nada novo para importar — tudo já está no hub'); return; }
-    const ok = await showConfirm(`Importar ${novas.length} IN's para o hub? Registros já existentes (${dados.length-novas.length}) serão mantidos como estão.`, 'Importar');
-    if(!ok) return;
-    novas.forEach(s=>ins.push({ ...s, id: s.id || uid(), timeline: s.timeline && s.timeline.length ? s.timeline : [{ data: new Date().toLocaleString('pt-BR'), texto: 'Importada do Jira (cópia — nada foi alterado lá).' }] }));
-    await saveIns(); renderIns(); renderDashboard();
-    showToast(novas.length + " IN's importadas");
-  } else if(dados && (dados.ins || dados.incidentes || dados.regras)){
-    // Backup completo — substitui tudo
-    const resumo = `${(dados.ins||[]).length} IN's, ${(dados.incidentes||[]).length} incidentes, ${(dados.regras||[]).length} regras`;
-    const ok = await showConfirm(`Restaurar backup completo (${resumo})? Isso substitui os dados atuais do hub.`, 'Restaurar');
-    if(!ok) return;
-    ins = dados.ins||[]; incidentes = dados.incidentes||[]; regras = dados.regras||[];
-    await saveIns(); await saveIncidentes(); await saveRegras();
-    renderDashboard(); renderIns(); renderIncidentes(); renderRegras();
-    showToast('Backup restaurado');
-  } else {
-    showToast('Formato não reconhecido');
-  }
-});
 
 document.querySelectorAll('.nav-item[data-view]').forEach(item=>item.addEventListener('click', ()=>switchView(item.dataset.view)));
-document.querySelectorAll('.nav-item.disabled').forEach(item=>{
-  item.addEventListener('click', ()=>{
-    document.getElementById('soon-title').textContent = item.dataset.soon;
-    document.getElementById('soon-desc').textContent = item.dataset.desc;
-    document.getElementById('soon-icon').innerHTML = item.querySelector('svg').outerHTML.replace('width="16" height="16"','width="26" height="26"');
-    switchView('soon', item);
-  });
-});
 function switchView(view, clickedEl){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+view).classList.add('active');
@@ -782,223 +487,8 @@ function switchView(view, clickedEl){
   if(target) target.classList.add('active');
   window.scrollTo(0,0);
 }
-switchView('dashboard');
+switchView('incidentes');
 
-/* ================= DASHBOARD ================= */
-function renderDashboard(){
-  const abertos = incidentes.filter(i=>i.status!=='Resolvido').length;
-  const insAtivas = ins.filter(i=>i.status!=='Concluído').length;
-  const stats = [
-    {num: ins.length, lbl:"IN's cadastradas"},
-    {num: insAtivas, lbl:"IN's em andamento"},
-    {num: abertos, lbl:'Incidentes em aberto'},
-    {num: regras.length, lbl:'Regras na biblioteca'},
-  ];
-  document.getElementById('dash-stats').innerHTML = stats.map(s=>`<div class="stat-card"><div class="num">${s.num}</div><div class="lbl">${s.lbl}</div></div>`).join('');
-
-  const recentIns = ins.map(x=>({...x,_type:'IN',_ts:x.updatedAt||0}));
-  const recentInc = incidentes.map(x=>({...x,_type:'Incidente',_ts:x.updatedAt||0}));
-  const all = [...recentIns, ...recentInc].sort((a,b)=>b._ts-a._ts).slice(0,6);
-  const box = document.getElementById('dash-recent');
-  if(all.length===0){ box.innerHTML = `<div class="empty"><h3>Nenhum registro ainda</h3><p>Cadastre sua primeira IN ou abra um incidente para começar.</p></div>`; return; }
-  box.innerHTML = all.map(x=>`
-    <div class="doc-card" onclick="${x._type==='IN' ? `openInDetail('${x.id}')` : `openIncDetail('${x.id}')`}">
-      <div>
-        <div class="num mono">${(x.jiraKey||'sem chave').toUpperCase()}</div>
-        <div class="ttl">${escapeHtml(x.titulo)}</div>
-        <div class="meta-row"><span class="badge badge-gray">${x._type}</span><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa||''}</span><span class="tag">${x.sistema||''}</span></div>
-      </div>
-    </div>`).join('');
-}
-
-/* ================= IN's ================= */
-const STATUS_BADGE = {
-  'Backlog':'badge-gray',
-  '[DEV] - A FAZER':'badge-blue',
-  '[DIR] - DEFINIR PROCESSOS':'badge-violet',
-  '[DEV] - FAZENDO':'badge-amber',
-  '[OP] - EM VALIDAÇÃO / PITA':'badge-teal',
-  '[DIR] - ENVIADO PARA VALIDAÇÃO':'badge-rose',
-  'FILA DE DEPLOY':'badge-indigo',
-  'Concluído':'badge-green',
-};
-const STATUS_LEGACY = { 'Rascunho':'Backlog', 'Em aprovação':'[DIR] - DEFINIR PROCESSOS', 'Aprovada':'[DEV] - A FAZER', 'Implementada':'Concluído' };
-function statusBadgeClass(s){ return STATUS_BADGE[s] || 'badge-gray'; }
-function inFilters(){
-  return {
-    search: document.getElementById('in-search').value.toLowerCase(),
-    empresa: document.getElementById('in-f-empresa').value,
-    sistema: document.getElementById('in-f-sistema').value,
-    status: document.getElementById('in-f-status').value,
-  };
-}
-function renderIns(){
-  const f = inFilters();
-  const list = ins.filter(x=>{
-    if(f.empresa && x.empresa!==f.empresa) return false;
-    if(f.sistema && x.sistema!==f.sistema) return false;
-    if(f.status && x.status!==f.status) return false;
-    if(f.search && !(x.titulo+' '+(x.jiraKey||'')).toLowerCase().includes(f.search)) return false;
-    return true;
-  }).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
-  document.getElementById('in-count').textContent = `${list.length} de ${ins.length}`;
-  const box = document.getElementById('in-list');
-  if(list.length===0){
-    box.innerHTML = `<div class="empty"><h3>${ins.length===0?'Nenhuma IN cadastrada':'Nada encontrado'}</h3><p>${ins.length===0?'Cadastre sua primeira IN com a estrutura completa do template.':'Ajuste os filtros ou a busca.'}</p></div>`;
-    return;
-  }
-  box.innerHTML = list.map(x=>`
-    <div class="doc-card" onclick="openInDetail('${x.id}')">
-      <div>
-        <div class="num mono">${(x.jiraKey||'sem chave').toUpperCase()}</div>
-        <div class="ttl">${escapeHtml(x.titulo)}</div>
-        <div class="meta-row"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span>${x.prioridade?`<span class="tag">${sevLabel(x.prioridade)}</span>`:''}${x.gut&&x.gut.score?`<span class="gut-chip">GUT ${x.gut.score}</span>`:''}</div>
-      </div>
-      <span class="badge ${statusBadgeClass(x.status)}">${x.status}</span>
-    </div>`).join('');
-}
-['in-search','in-f-empresa','in-f-sistema','in-f-status'].forEach(id=>document.getElementById(id).addEventListener('input',renderIns));
-
-function renderListEditor(containerId, state, placeholder){
-  const box = document.getElementById(containerId);
-  box.innerHTML = state.map((c,i)=>`
-    <div class="ci-row"><input type="text" value="${escapeHtml(c)}" data-idx="${i}" placeholder="${placeholder}"><button type="button" class="ci-remove" data-idx="${i}">&times;</button></div>
-  `).join('');
-  box.querySelectorAll('input').forEach(inp=>inp.addEventListener('input', ()=>{ state[inp.dataset.idx] = inp.value; }));
-  box.querySelectorAll('.ci-remove').forEach(btn=>btn.addEventListener('click', ()=>{ state.splice(btn.dataset.idx,1); renderListEditor(containerId,state,placeholder); }));
-}
-document.getElementById('in-add-criterio').addEventListener('click', ()=>{ criteriosState.push(''); renderListEditor('in-criterios-editor',criteriosState,'Critério de aceite...'); });
-document.getElementById('in-add-teste').addEventListener('click', ()=>{ testesState.push(''); renderListEditor('in-testes-editor',testesState,'Caso de teste...'); });
-
-function computeGutScore(){
-  const g = parseInt(document.getElementById('in-gut-g').value)||1;
-  const u = parseInt(document.getElementById('in-gut-u').value)||1;
-  const t = parseInt(document.getElementById('in-gut-t').value)||1;
-  document.getElementById('in-gut-score').textContent = g*u*t;
-}
-['in-gut-g','in-gut-u','in-gut-t'].forEach(id=>document.getElementById(id).addEventListener('change',computeGutScore));
-
-document.getElementById('btn-new-in').addEventListener('click', ()=>openInForm());
-function openInForm(editId){
-  document.getElementById('in-form').reset();
-  document.getElementById('in-edit-id').value = '';
-  document.getElementById('in-form-title').textContent = 'Nova IN';
-  criteriosState = []; testesState = [];
-  if(editId){
-    const x = ins.find(i=>i.id===editId);
-    if(x){
-      document.getElementById('in-form-title').textContent = 'Editar IN';
-      document.getElementById('in-edit-id').value = x.id;
-      document.getElementById('in-titulo').value = x.titulo;
-      document.getElementById('in-empresa').value = x.empresa;
-      document.getElementById('in-sistema').value = x.sistema;
-      document.getElementById('in-status').value = x.status;
-      document.getElementById('in-prioridade').value = x.prioridade||'Medium';
-      document.getElementById('in-jirakey').value = x.jiraKey||'';
-      document.getElementById('in-jiraurl').value = x.jiraUrl||'';
-      document.getElementById('in-solicitante').value = x.solicitante||'';
-      document.getElementById('in-resumo').value = x.resumo||'';
-      document.getElementById('in-descricao').value = x.descricao||'';
-      document.getElementById('in-cenario-atual').value = x.cenarioAtual||'';
-      document.getElementById('in-cenario-esperado').value = x.cenarioEsperado||'';
-      document.getElementById('in-regras').value = x.regrasAplicaveis||'';
-      document.getElementById('in-escopo').value = x.escopo||'';
-      if(x.gut){
-        document.getElementById('in-gut-g').value = x.gut.g||3;
-        document.getElementById('in-gut-u').value = x.gut.u||3;
-        document.getElementById('in-gut-t').value = x.gut.t||3;
-      }
-      criteriosState = (x.criterios||[]).slice();
-      testesState = (x.casosTeste||[]).slice();
-    }
-  }
-  computeGutScore();
-  renderListEditor('in-criterios-editor',criteriosState,'Critério de aceite...');
-  renderListEditor('in-testes-editor',testesState,'Caso de teste...');
-  openOverlay('overlay-in-form');
-}
-document.getElementById('in-jirakey').addEventListener('blur', function(){
-  const u = document.getElementById('in-jiraurl'); if(!u.value && this.value) u.value = autoJiraUrl(this.value);
-});
-
-document.getElementById('in-save-btn').addEventListener('click', async ()=>{
-  const tituloVal = document.getElementById('in-titulo').value.trim();
-  if(!tituloVal){ showToast('Informe o título da IN'); document.getElementById('in-titulo').focus(); return; }
-  const editId = document.getElementById('in-edit-id').value;
-  const jiraKey = normalizeJiraKey(document.getElementById('in-jirakey').value);
-  const now = Date.now();
-  const g = parseInt(document.getElementById('in-gut-g').value)||3;
-  const u = parseInt(document.getElementById('in-gut-u').value)||3;
-  const t = parseInt(document.getElementById('in-gut-t').value)||3;
-  const data = {
-    titulo: document.getElementById('in-titulo').value.trim(),
-    empresa: document.getElementById('in-empresa').value,
-    sistema: document.getElementById('in-sistema').value,
-    status: document.getElementById('in-status').value,
-    prioridade: document.getElementById('in-prioridade').value,
-    jiraKey, jiraUrl: jiraKey ? autoJiraUrl(jiraKey) : document.getElementById('in-jiraurl').value.trim(),
-    solicitante: document.getElementById('in-solicitante').value.trim(),
-    resumo: document.getElementById('in-resumo').value.trim(),
-    descricao: document.getElementById('in-descricao').value.trim(),
-    cenarioAtual: document.getElementById('in-cenario-atual').value.trim(),
-    cenarioEsperado: document.getElementById('in-cenario-esperado').value.trim(),
-    regrasAplicaveis: document.getElementById('in-regras').value.trim(),
-    escopo: document.getElementById('in-escopo').value.trim(),
-    criterios: criteriosState.filter(c=>c.trim()!==''),
-    casosTeste: testesState.filter(c=>c.trim()!==''),
-    gut: { g,u,t, score:g*u*t },
-    updatedAt: now,
-  };
-  if(editId){
-    const atual = ins.find(i=>i.id===editId);
-    if(atual && atual.gut && atual.gut.score && atual.gut.g==null && g===3 && u===3 && t===3){
-      data.gut = atual.gut; // mantém o Score GUT importado do Jira se os seletores não foram alterados
-    }
-  }
-  if(editId){
-    const idx = ins.findIndex(i=>i.id===editId);
-    if(idx>-1) ins[idx] = {...ins[idx], ...data};
-    showToast('IN atualizada');
-  } else {
-    data.id = uid(); data.createdAt = now; data.timeline = [];
-    ins.push(data); showToast('IN criada');
-  }
-  await saveIns(); closeOverlay('overlay-in-form'); renderIns(); renderDashboard();
-  if(editId && currentInId===editId) openInDetail(editId);
-});
-
-function openInDetail(id){
-  const x = ins.find(i=>i.id===id); if(!x) return;
-  currentInId = id;
-  document.getElementById('ind-num').textContent = (x.jiraKey||'sem chave').toUpperCase();
-  document.getElementById('ind-title').textContent = x.titulo;
-  document.getElementById('ind-meta').innerHTML = `
-    <span class="badge ${statusBadgeClass(x.status)}">${x.status}</span>
-    <span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span>
-    ${x.prioridade?`<span class="tag">Prioridade: ${sevLabel(x.prioridade)}</span>`:''}
-    ${x.gut&&x.gut.score?`<span class="gut-chip">GUT ${x.gut.score}</span>`:''}
-    ${x.solicitante?`<span class="tag">Solicitante: ${escapeHtml(x.solicitante)}</span>`:''}
-    ${x.responsavel?`<span class="tag">Responsável: ${escapeHtml(x.responsavel)}</span>`:''}
-    ${(x.labelsJira||[]).map(l=>`<span class="tag">${escapeHtml(l)}</span>`).join('')}
-    ${x.criadoEm?`<span class="tag">Criada: ${x.criadoEm}</span>`:''}
-    ${x.atualizadoEm?`<span class="tag">Atualizada no Jira: ${x.atualizadoEm}</span>`:''}`;
-  const jw = document.getElementById('ind-jira-wrap');
-  jw.innerHTML = x.jiraUrl ? `<a class="jira-link" href="${x.jiraUrl}" target="_blank" rel="noopener">Abrir no Jira &rarr;</a>` : '';
-  document.getElementById('ind-jira-create-wrap').innerHTML = '';
-  toggleSection('ind-resumo-wrap','ind-resumo', x.resumo);
-  toggleSection('ind-desc-wrap','ind-desc', x.descricao);
-  const cenWrap = document.getElementById('ind-cenarios-wrap');
-  if(x.cenarioAtual || x.cenarioEsperado){ cenWrap.style.display='grid'; document.getElementById('ind-cen-atual').textContent = x.cenarioAtual||'—'; document.getElementById('ind-cen-esperado').textContent = x.cenarioEsperado||'—'; }
-  else cenWrap.style.display='none';
-  const critWrap = document.getElementById('ind-crit-wrap');
-  if(x.criterios && x.criterios.length){ critWrap.style.display='block'; document.getElementById('ind-criterios').innerHTML = x.criterios.map(c=>`<li><span class="crit-check"></span>${escapeHtml(c)}</li>`).join(''); } else critWrap.style.display='none';
-  const testWrap = document.getElementById('ind-testes-wrap');
-  if(x.casosTeste && x.casosTeste.length){ testWrap.style.display='block'; document.getElementById('ind-testes').innerHTML = x.casosTeste.map(c=>`<li><span class="crit-check"></span>${escapeHtml(c)}</li>`).join(''); } else testWrap.style.display='none';
-  toggleSection('ind-regras-wrap','ind-regras', x.regrasAplicaveis);
-  toggleSection('ind-esc-wrap','ind-esc', x.escopo);
-  renderTimelineGeneric(document.getElementById('ind-timeline'), x.timeline);
-  openOverlay('overlay-in-detail');
-}
 function toggleSection(wrapId, textId, val){
   const w = document.getElementById(wrapId);
   if(val){ w.style.display='block'; document.getElementById(textId).textContent = val; } else w.style.display='none';
@@ -1007,22 +497,6 @@ function renderTimelineGeneric(el, timeline){
   const notes = (timeline||[]).slice().reverse();
   el.innerHTML = notes.length ? notes.map(n=>`<div class="timeline-item"><div class="timeline-date">${n.data}</div><div class="timeline-text">${escapeHtml(n.texto)}</div></div>`).join('') : '<p style="font-size:12.5px;color:var(--ink-mute);">Nenhuma observação registrada ainda.</p>';
 }
-document.getElementById('ind-edit').addEventListener('click', ()=>{ const id=currentInId; closeOverlay('overlay-in-detail'); openInForm(id); });
-document.getElementById('ind-delete').addEventListener('click', async ()=>{
-  if(!currentInId) return;
-  const ok = await showConfirm('Excluir esta IN? Essa ação não pode ser desfeita.', 'Excluir IN');
-  if(!ok) return;
-  ins = ins.filter(i=>i.id!==currentInId); await saveIns(); closeOverlay('overlay-in-detail'); renderIns(); renderDashboard(); showToast('IN excluída');
-});
-document.getElementById('ind-add-note').addEventListener('click', async ()=>{
-  const ta = document.getElementById('ind-new-note'); const text = ta.value.trim();
-  if(!text || !currentInId) return;
-  const x = ins.find(i=>i.id===currentInId); if(!x) return;
-  if(!x.timeline) x.timeline=[];
-  x.timeline.push({data:new Date().toLocaleString('pt-BR'), texto:text}); x.updatedAt=Date.now();
-  ta.value=''; await saveIns(); renderTimelineGeneric(document.getElementById('ind-timeline'), x.timeline); renderIns(); renderDashboard(); showToast('Observação adicionada');
-});
-
 /* ================= INCIDENTES ================= */
 const SEV_LABELS = { Highest:'Altíssima', High:'Alta', Medium:'Média', Low:'Baixa', Lowest:'Baixíssima' };
 function fmtDataBR(iso){ if(!iso) return ''; const p = iso.split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : iso; }
@@ -1059,7 +533,7 @@ function renderIncidentes(){
         <div><div class="num mono">${(x.jiraKey||'sem chave').toUpperCase()}</div><div class="ttl">${escapeHtml(x.titulo)}</div></div>
         <span class="badge ${x.status==='Resolvido'?'badge-green':x.status==='Investigando'?'badge-amber':'badge-blue'}">${x.status}</span>
       </div>
-      <div class="meta-row" style="margin-top:9px;"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">${fmtDataBR(x.dataIncidente)}</span>`:''}</div>
+      <div class="meta-row" style="margin-top:9px;"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">${fmtDataBR(x.dataIncidente)}</span>`:''}${x.categoria?`<span class="tag">${escapeHtml(x.categoria)}</span>`:''}${x.protocolo?`<span class="ref-chip">Ref: ${escapeHtml(x.protocolo)}</span>`:''}</div>
     </div>`).join('');
 }
 ['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status'].forEach(id=>document.getElementById(id).addEventListener('input',renderIncidentes));
@@ -1080,6 +554,10 @@ function openIncForm(editId){
       document.getElementById('inc-sev').value=x.severidade;
       document.getElementById('inc-status').value=x.status;
       document.getElementById('inc-data').value=x.dataIncidente||'';
+      document.getElementById('inc-data-relato').value=x.dataRelato||'';
+      document.getElementById('inc-solicitante').value=x.solicitante||'';
+      document.getElementById('inc-categoria').value=x.categoria||'';
+      document.getElementById('inc-protocolo').value=x.protocolo||'';
       document.getElementById('inc-jirakey').value=x.jiraKey||'';
       document.getElementById('inc-jiraurl').value=x.jiraUrl||'';
       document.getElementById('inc-descricao').value=x.descricao||'';
@@ -1105,6 +583,10 @@ document.getElementById('inc-save-btn').addEventListener('click', async ()=>{
     severidade: document.getElementById('inc-sev').value,
     status: document.getElementById('inc-status').value,
     dataIncidente: document.getElementById('inc-data').value,
+    dataRelato: document.getElementById('inc-data-relato').value,
+    solicitante: document.getElementById('inc-solicitante').value.trim(),
+    categoria: document.getElementById('inc-categoria').value,
+    protocolo: document.getElementById('inc-protocolo').value.trim(),
     jiraKey, jiraUrl: jiraKey ? autoJiraUrl(jiraKey) : document.getElementById('inc-jiraurl').value.trim(),
     descricao: document.getElementById('inc-descricao').value.trim(),
     impacto: document.getElementById('inc-impacto').value.trim(),
@@ -1119,7 +601,7 @@ document.getElementById('inc-save-btn').addEventListener('click', async ()=>{
     data.id = uid(); data.createdAt = now; data.timeline = [];
     incidentes.push(data); showToast('Incidente registrado');
   }
-  await saveIncidentes(); closeOverlay('overlay-inc-form'); renderIncidentes(); renderDashboard();
+  await saveIncidentes(); closeOverlay('overlay-inc-form'); renderIncidentes();
   if(editId && currentIncId===editId) openIncDetail(editId);
 });
 
@@ -1130,7 +612,7 @@ function openIncDetail(id){
   document.getElementById('incd-title').textContent = x.titulo;
   document.getElementById('incd-meta').innerHTML = `
     <span class="badge ${x.status==='Resolvido'?'badge-green':x.status==='Investigando'?'badge-amber':'badge-blue'}">${x.status}</span>
-    <span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">Data: ${fmtDataBR(x.dataIncidente)}</span>`:''}`;
+    <span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">Data: ${fmtDataBR(x.dataIncidente)}</span>`:''}${x.dataRelato?`<span class="tag mono">Relatado: ${fmtDataBR(x.dataRelato)}</span>`:''}${x.categoria?`<span class="tag">${escapeHtml(x.categoria)}</span>`:''}${x.solicitante?`<span class="tag">Solicitante: ${escapeHtml(x.solicitante)}</span>`:''}${x.protocolo?`<span class="ref-chip">Ref: ${escapeHtml(x.protocolo)}</span>`:''}`;
   const jw = document.getElementById('incd-jira-wrap');
   jw.innerHTML = x.jiraUrl ? `<a class="jira-link" href="${x.jiraUrl}" target="_blank" rel="noopener">Abrir no Jira &rarr;</a>` : '';
   toggleSection('incd-desc-wrap','incd-desc', x.descricao);
@@ -1144,7 +626,7 @@ document.getElementById('incd-delete').addEventListener('click', async ()=>{
   if(!currentIncId) return;
   const ok = await showConfirm('Excluir este incidente?', 'Excluir incidente');
   if(!ok) return;
-  incidentes = incidentes.filter(i=>i.id!==currentIncId); await saveIncidentes(); closeOverlay('overlay-inc-detail'); renderIncidentes(); renderDashboard(); showToast('Incidente excluído');
+  incidentes = incidentes.filter(i=>i.id!==currentIncId); await saveIncidentes(); closeOverlay('overlay-inc-detail'); renderIncidentes(); showToast('Incidente excluído');
 });
 document.getElementById('incd-add-note').addEventListener('click', async ()=>{
   const ta = document.getElementById('incd-new-note'); const text = ta.value.trim();
@@ -1152,191 +634,10 @@ document.getElementById('incd-add-note').addEventListener('click', async ()=>{
   const x = incidentes.find(i=>i.id===currentIncId); if(!x) return;
   if(!x.timeline) x.timeline=[];
   x.timeline.push({data:new Date().toLocaleString('pt-BR'), texto:text}); x.updatedAt=Date.now();
-  ta.value=''; await saveIncidentes(); renderTimelineGeneric(document.getElementById('incd-timeline'), x.timeline); renderIncidentes(); renderDashboard(); showToast('Atualização adicionada');
+  ta.value=''; await saveIncidentes(); renderTimelineGeneric(document.getElementById('incd-timeline'), x.timeline); renderIncidentes(); showToast('Atualização adicionada');
 });
 
 /* ================= REGRAS DE NEGÓCIO ================= */
-const SISTEMAS = ['ADMIN','B2B','B2C'];
-function renderRulesNav(){
-  const box = document.getElementById('rules-nav');
-  const counts = {};
-  SISTEMAS.forEach(s=>counts[s] = regras.filter(r=>r.sistema===s).length);
-  let html = `<div class="rules-nav-item ${activeRulesFilter===''?'active':''}" data-sis="">Todas as regras <span class="count">${regras.length}</span></div>`;
-  html += SISTEMAS.map(s=>`<div class="rules-nav-item ${activeRulesFilter===s?'active':''}" data-sis="${s}">${s} <span class="count">${counts[s]}</span></div>`).join('');
-  box.innerHTML = html;
-  box.querySelectorAll('.rules-nav-item').forEach(el=>el.addEventListener('click', ()=>{ activeRulesFilter = el.dataset.sis; renderRegras(); }));
-}
-function renderRegras(){
-  renderRulesNav();
-  const search = document.getElementById('reg-search').value.toLowerCase();
-  const sorted = regras.slice().sort((a,b)=>(a.artigo||0)-(b.artigo||0));
-  const list = sorted.filter(x=>{
-    if(activeRulesFilter && x.sistema!==activeRulesFilter) return false;
-    if(search && !(x.titulo+' '+x.texto).toLowerCase().includes(search)) return false;
-    return true;
-  });
-  document.getElementById('reg-count').textContent = `${list.length} de ${regras.length}`;
-  const box = document.getElementById('reg-list');
-  if(list.length===0){
-    box.innerHTML = `<div class="empty"><h3>${regras.length===0?'Biblioteca vazia':'Nada encontrado'}</h3><p>${regras.length===0?'Cada regra cadastrada vira um artigo numerado, a referência oficial de como o sistema deve se comportar.':'Ajuste o filtro ou a busca.'}</p></div>`;
-    return;
-  }
-  box.innerHTML = list.map(x=>`
-    <div class="article" onclick="openRegDetail('${x.id}')">
-      <div class="article-num">Art. ${x.artigo}&ordm;</div>
-      <div class="article-title">${escapeHtml(x.titulo)}</div>
-      <div class="article-body">${escapeHtml(x.texto)}</div>
-      <div class="article-meta"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span>${x.categoria?`<span class="tag">${escapeHtml(x.categoria)}</span>`:''}${x.origem?`<span class="tag">origem: ${escapeHtml(x.origem)}</span>`:''}</div>
-    </div>`).join('');
-}
-document.getElementById('reg-search').addEventListener('input', renderRegras);
-
-document.getElementById('btn-new-regra').addEventListener('click', ()=>openRegForm());
-function openRegForm(editId){
-  document.getElementById('reg-form').reset();
-  document.getElementById('reg-edit-id').value='';
-  document.getElementById('reg-form-title').textContent='Nova regra';
-  if(editId){
-    const x = regras.find(r=>r.id===editId);
-    if(x){
-      document.getElementById('reg-form-title').textContent='Editar regra';
-      document.getElementById('reg-edit-id').value=x.id;
-      document.getElementById('reg-titulo').value=x.titulo;
-      document.getElementById('reg-empresa').value=x.empresa;
-      document.getElementById('reg-sistema').value=x.sistema;
-      document.getElementById('reg-categoria').value=x.categoria||'';
-      document.getElementById('reg-texto').value=x.texto||'';
-      document.getElementById('reg-origem').value=x.origem||'';
-    }
-  }
-  openOverlay('overlay-reg-form');
-}
-document.getElementById('reg-save-btn').addEventListener('click', async ()=>{
-  const regTituloVal = document.getElementById('reg-titulo').value.trim();
-  if(!regTituloVal){ showToast('Informe o título da regra'); document.getElementById('reg-titulo').focus(); return; }
-  const editId = document.getElementById('reg-edit-id').value;
-  const now = Date.now();
-  const data = {
-    titulo: document.getElementById('reg-titulo').value.trim(),
-    empresa: document.getElementById('reg-empresa').value,
-    sistema: document.getElementById('reg-sistema').value,
-    categoria: document.getElementById('reg-categoria').value.trim(),
-    texto: document.getElementById('reg-texto').value.trim(),
-    origem: document.getElementById('reg-origem').value.trim(),
-    updatedAt: now,
-  };
-  if(editId){
-    const idx = regras.findIndex(r=>r.id===editId);
-    if(idx>-1) regras[idx] = {...regras[idx], ...data};
-    showToast('Regra atualizada');
-  } else {
-    data.id = uid(); data.createdAt = now;
-    data.artigo = regras.length ? Math.max(...regras.map(r=>r.artigo||0))+1 : 1;
-    regras.push(data); showToast('Regra criada');
-  }
-  await saveRegras(); closeOverlay('overlay-reg-form'); renderRegras(); renderDashboard();
-});
-
-function openRegDetail(id){
-  const x = regras.find(r=>r.id===id); if(!x) return;
-  currentRegId = id;
-  document.getElementById('regd-num').textContent = `Art. ${x.artigo}º`;
-  document.getElementById('regd-title').textContent = x.titulo;
-  document.getElementById('regd-meta').innerHTML = `<span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span>${x.categoria?`<span class="tag">${escapeHtml(x.categoria)}</span>`:''}`;
-  document.getElementById('regd-texto').textContent = x.texto;
-  toggleSection('regd-origem-wrap','regd-origem', x.origem);
-  openOverlay('overlay-reg-detail');
-}
-document.getElementById('regd-edit').addEventListener('click', ()=>{ const id=currentRegId; closeOverlay('overlay-reg-detail'); openRegForm(id); });
-document.getElementById('regd-delete').addEventListener('click', async ()=>{
-  if(!currentRegId) return;
-  const ok = await showConfirm('Excluir esta regra?', 'Excluir regra');
-  if(!ok) return;
-  regras = regras.filter(r=>r.id!==currentRegId); await saveRegras(); closeOverlay('overlay-reg-detail'); renderRegras(); renderDashboard(); showToast('Regra excluída');
-});
-
-/* ================= BUSCA NO HISTÓRICO (local) ================= */
-function buscarLocal(consulta){
-  const stop = new Set(['problema','problemas','erro','erros','bug','bugs','falha','falhas','ajuste','ajustes','correcao','correção','melhoria','melhorias','sistema','plataforma','tela','telas','chamado','chamados','solicitacao','solicitação','cliente','clientes','usuario','usuário','usuarios','usuários','dados','informacao','informação','de','do','da','no','na','em','um','uma','o','a','os','as','que','com','para','por','e','ou','sobre']);
-  const norm = s => (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-  const termos = norm(consulta).split(/[^a-z0-9]+/).filter(t=>t.length>2 && !stop.has(t));
-  if(termos.length===0) return { resumo:'Consulta muito genérica — use uma palavra específica do tema (ex: antecipação, extrato, vcard).', resultados:[] };
-
-  const fontes = [
-    ...ins.map(x=>({tipo:'IN', obj:x, texto:norm([x.titulo,x.resumo,x.descricao,x.cenarioAtual,x.cenarioEsperado,x.escopo,x.regrasAplicaveis,(x.criterios||[]).join(' '),(x.casosTeste||[]).join(' ')].join(' '))})),
-    ...incidentes.map(x=>({tipo:'Incidente', obj:x, texto:norm([x.titulo,x.descricao,x.impacto,x.passos].join(' '))})),
-    ...regras.map(x=>({tipo:'Regra', obj:x, texto:norm([x.titulo,x.texto,x.categoria].join(' '))})),
-  ];
-  const scored = fontes.map(f=>{
-    let score = 0;
-    const tituloNorm = norm(f.obj.titulo);
-    termos.forEach(t=>{
-      if(tituloNorm.includes(t)) score += 5;
-      if(f.texto.includes(t)) score += 1;
-    });
-    return {...f, score};
-  }).filter(f=>f.score>0).sort((a,b)=>b.score-a.score).slice(0,8);
-
-  if(scored.length===0) return { resumo:'Nenhum registro do portal trata desse tema — parece seguro abrir uma demanda nova.', resultados:[] };
-  return {
-    resumo:`${scored.length} registro${scored.length>1?'s':''} do portal relacionado${scored.length>1?'s':''} a "${consulta}". Confira antes de abrir uma demanda nova.`,
-    resultados: scored.map(f=>({
-      tipo: f.tipo,
-      key: f.obj.jiraKey || (f.tipo==='Regra' ? `Art. ${f.obj.artigo}º` : 'sem chave'),
-      titulo: f.obj.titulo,
-      status: f.obj.status || f.obj.sistema || '',
-      problema: f.tipo==='Regra' ? (f.obj.texto||'').slice(0,140) : (f.obj.resumo || f.obj.descricao || '').slice(0,140),
-      solucao: '',
-      solicitante: f.obj.solicitante || '',
-      responsavel: '',
-      jiraUrl: f.obj.jiraUrl || '',
-      _id: f.obj.id, _tipo: f.tipo,
-    })),
-  };
-}
-function renderBuscaResultados(res){
-  const resumoBox = document.getElementById('busca-resumo');
-  const listBox = document.getElementById('busca-resultados');
-  resumoBox.style.display = 'block';
-  resumoBox.innerHTML = `<div class="busca-resumo-box">${escapeHtml(res.resumo||'')}</div>`;
-  const items = res.resultados||[];
-  if(items.length === 0){ listBox.innerHTML = ''; return; }
-  listBox.innerHTML = items.map((r,i)=>`
-    <div class="busca-card">
-      <div class="bc-head">
-        <div>
-          <div class="bc-key">${escapeHtml(r.key)} <span class="badge badge-gray" style="margin-left:6px;">${r.tipo}</span></div>
-          <div class="bc-title">${escapeHtml(r.titulo||'')}</div>
-        </div>
-        <span class="badge badge-gray">${escapeHtml(r.status||'')}</span>
-      </div>
-      ${r.problema?`<div class="bc-body">${escapeHtml(r.problema)}${r.problema.length>=140?'…':''}</div>`:''}
-      <div class="bc-foot">
-        <span style="font-size:11.5px;color:var(--ink-mute);">${r.solicitante?`Solicitante: ${escapeHtml(r.solicitante)}`:''}</span>
-        <span style="display:flex;gap:8px;">
-          <button class="btn btn-ghost btn-sm" onclick="abrirResultadoBusca('${r._tipo}','${r._id}')">Ver detalhes</button>
-          ${r.jiraUrl?`<a class="jira-link" href="${r.jiraUrl}" target="_blank" rel="noopener" style="padding:6px 11px;font-size:12px;">Abrir no Jira &rarr;</a>`:''}
-        </span>
-      </div>
-    </div>`).join('');
-}
-function abrirResultadoBusca(tipo, id){
-  if(tipo==='IN') openInDetail(id);
-  else if(tipo==='Incidente') openIncDetail(id);
-  else if(tipo==='Regra') openRegDetail(id);
-}
-function executarBusca(){
-  const input = document.getElementById('busca-input');
-  const consulta = input.value.trim();
-  if(!consulta){ showToast('Digite um tema ou palavra-chave'); input.focus(); return; }
-  document.getElementById('busca-resumo').style.display = 'none';
-  document.getElementById('busca-resultados').innerHTML = '';
-  const res = buscarLocal(consulta);
-  renderBuscaResultados(res);
-}
-document.getElementById('busca-btn').addEventListener('click', executarBusca);
-document.getElementById('busca-input').addEventListener('keydown', (e)=>{ if(e.key==='Enter') executarBusca(); });
-
 /* ================= AUTENTICACAO ================= */
 function showLoginErr(msg){ const e=document.getElementById('login-err'); e.textContent=msg; e.classList.add('show'); }
 async function initAuth(){
