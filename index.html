@@ -395,6 +395,31 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
     <div class="form-row"><label>E-mail</label><input type="email" id="login-email" placeholder="voce@email.com"></div>
     <div class="form-row"><label>Senha</label><input type="password" id="login-senha" placeholder="Sua senha"></div>
     <button class="btn btn-primary" id="login-btn" style="width:100%;justify-content:center;margin-top:6px;">Entrar</button>
+    <div style="text-align:center;margin-top:14px;"><a href="#" id="link-esqueci-senha" style="font-size:12.5px;color:var(--accent);text-decoration:none;">Esqueci minha senha</a></div>
+  </div>
+</div>
+
+<div class="login-screen" id="reset-screen">
+  <div class="login-card">
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+    <h2>Nova senha</h2>
+    <div class="sub">Defina uma nova senha para sua conta</div>
+    <div class="login-err" id="reset-err"></div>
+    <div class="form-row"><label>Nova senha</label><input type="password" id="reset-senha" placeholder="Mínimo 6 caracteres"></div>
+    <div class="form-row"><label>Confirmar senha</label><input type="password" id="reset-senha-confirma" placeholder="Repita a senha"></div>
+    <button class="btn btn-primary" id="reset-btn" style="width:100%;justify-content:center;margin-top:6px;">Salvar nova senha</button>
+  </div>
+</div>
+
+<div class="login-screen" id="forgot-screen">
+  <div class="login-card">
+    <div class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></div>
+    <h2>Recuperar senha</h2>
+    <div class="sub">Enviamos um link de redefinição para seu e-mail</div>
+    <div class="login-err" id="forgot-err"></div>
+    <div class="form-row"><label>E-mail</label><input type="email" id="forgot-email" placeholder="voce@email.com"></div>
+    <button class="btn btn-primary" id="forgot-btn" style="width:100%;justify-content:center;margin-top:6px;">Enviar link</button>
+    <div style="text-align:center;margin-top:14px;"><a href="#" id="link-voltar-login" style="font-size:12.5px;color:var(--accent);text-decoration:none;">Voltar para o login</a></div>
   </div>
 </div>
 
@@ -640,9 +665,21 @@ document.getElementById('incd-add-note').addEventListener('click', async ()=>{
 /* ================= REGRAS DE NEGÓCIO ================= */
 /* ================= AUTENTICACAO ================= */
 function showLoginErr(msg){ const e=document.getElementById('login-err'); e.textContent=msg; e.classList.add('show'); }
+function showResetErr(msg){ const e=document.getElementById('reset-err'); e.textContent=msg; e.classList.add('show'); }
+function showForgotErr(msg){ const e=document.getElementById('forgot-err'); e.textContent=msg; e.classList.add('show'); }
+function hideAllAuthScreens(){
+  ['login-screen','reset-screen','forgot-screen'].forEach(id=>document.getElementById(id).classList.remove('show'));
+}
 async function initAuth(){
   if(SUPABASE_URL.indexOf('COLE_AQUI')===0 || SUPABASE_ANON_KEY.indexOf('COLE_AQUI')===0){
     document.body.innerHTML = '<div style="max-width:560px;margin:80px auto;padding:28px;background:#fff;border:1px solid #EDCEA0;border-radius:16px;font-family:Inter,sans-serif;"><h2 style="font-family:Sora,sans-serif;font-size:18px;margin:0 0 10px;">Configura&ccedil;&atilde;o pendente</h2><p style="font-size:13.5px;line-height:1.65;color:#565D6B;">Abra o arquivo <code>index.html</code> e preencha <code>SUPABASE_URL</code> e <code>SUPABASE_ANON_KEY</code> no topo do bloco de script, conforme o passo a passo do README.</p></div>';
+    return;
+  }
+  // Link de recuperação de senha do Supabase chega com type=recovery no hash da URL
+  const isRecovery = window.location.hash.includes('type=recovery');
+  if(isRecovery){
+    hideAllAuthScreens();
+    document.getElementById('reset-screen').classList.add('show');
     return;
   }
   const { data:{ session } } = await sbClient().auth.getSession();
@@ -663,6 +700,43 @@ document.getElementById('login-btn').addEventListener('click', async ()=>{
   showToast('Bem-vindo de volta');
 });
 document.getElementById('login-senha').addEventListener('keydown', (e)=>{ if(e.key==='Enter') document.getElementById('login-btn').click(); });
+
+document.getElementById('link-esqueci-senha').addEventListener('click', (e)=>{
+  e.preventDefault();
+  hideAllAuthScreens();
+  document.getElementById('forgot-screen').classList.add('show');
+});
+document.getElementById('link-voltar-login').addEventListener('click', (e)=>{
+  e.preventDefault();
+  hideAllAuthScreens();
+  document.getElementById('login-screen').classList.add('show');
+});
+document.getElementById('forgot-btn').addEventListener('click', async ()=>{
+  const email = document.getElementById('forgot-email').value.trim();
+  if(!email){ showForgotErr('Informe seu e-mail'); return; }
+  const btn = document.getElementById('forgot-btn');
+  btn.disabled = true;
+  const { error } = await sbClient().auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + window.location.pathname });
+  btn.disabled = false;
+  if(error){ showForgotErr('Nao foi possivel enviar: '+error.message); return; }
+  showToast('Link enviado — confira seu e-mail');
+  document.getElementById('forgot-btn').textContent = 'Link enviado';
+});
+document.getElementById('reset-btn').addEventListener('click', async ()=>{
+  const senha = document.getElementById('reset-senha').value;
+  const confirma = document.getElementById('reset-senha-confirma').value;
+  if(!senha || senha.length < 6){ showResetErr('A senha precisa ter pelo menos 6 caracteres'); return; }
+  if(senha !== confirma){ showResetErr('As senhas nao coincidem'); return; }
+  const btn = document.getElementById('reset-btn');
+  btn.disabled = true;
+  const { error } = await sbClient().auth.updateUser({ password: senha });
+  btn.disabled = false;
+  if(error){ showResetErr('Nao foi possivel salvar: '+error.message); return; }
+  history.replaceState(null, '', window.location.pathname);
+  hideAllAuthScreens();
+  showToast('Senha atualizada — entrando...');
+  await loadAll();
+});
 document.getElementById('btn-logout').addEventListener('click', async ()=>{
   const ok = await showConfirm('Sair da sua conta neste dispositivo?', 'Sair');
   if(!ok) return;
