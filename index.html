@@ -539,7 +539,8 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
           </select>
         </div>
       </div>
-      <div class="form-row two">
+      <div class="form-row three">
+        <div><label>Data do incidente</label><input type="date" id="inc-data"></div>
         <div><label>Status</label><select id="inc-status"><option>Aberto</option><option>Investigando</option><option>Resolvido</option></select></div>
         <div><label>Chave Jira</label><input type="text" id="inc-jirakey" placeholder="IN-354"></div>
       </div>
@@ -1024,6 +1025,7 @@ document.getElementById('ind-add-note').addEventListener('click', async ()=>{
 
 /* ================= INCIDENTES ================= */
 const SEV_LABELS = { Highest:'Altíssima', High:'Alta', Medium:'Média', Low:'Baixa', Lowest:'Baixíssima' };
+function fmtDataBR(iso){ if(!iso) return ''; const p = iso.split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : iso; }
 function sevClass(s){ return 'sev-'+ (s||'medium').toLowerCase(); }
 function sevLabel(s){ return SEV_LABELS[s] || s; }
 function incFilters(){
@@ -1057,7 +1059,7 @@ function renderIncidentes(){
         <div><div class="num mono">${(x.jiraKey||'sem chave').toUpperCase()}</div><div class="ttl">${escapeHtml(x.titulo)}</div></div>
         <span class="badge ${x.status==='Resolvido'?'badge-green':x.status==='Investigando'?'badge-amber':'badge-blue'}">${x.status}</span>
       </div>
-      <div class="meta-row" style="margin-top:9px;"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span></div>
+      <div class="meta-row" style="margin-top:9px;"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">${fmtDataBR(x.dataIncidente)}</span>`:''}</div>
     </div>`).join('');
 }
 ['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status'].forEach(id=>document.getElementById(id).addEventListener('input',renderIncidentes));
@@ -1077,6 +1079,7 @@ function openIncForm(editId){
       document.getElementById('inc-sistema').value=x.sistema;
       document.getElementById('inc-sev').value=x.severidade;
       document.getElementById('inc-status').value=x.status;
+      document.getElementById('inc-data').value=x.dataIncidente||'';
       document.getElementById('inc-jirakey').value=x.jiraKey||'';
       document.getElementById('inc-jiraurl').value=x.jiraUrl||'';
       document.getElementById('inc-descricao').value=x.descricao||'';
@@ -1101,6 +1104,7 @@ document.getElementById('inc-save-btn').addEventListener('click', async ()=>{
     sistema: document.getElementById('inc-sistema').value,
     severidade: document.getElementById('inc-sev').value,
     status: document.getElementById('inc-status').value,
+    dataIncidente: document.getElementById('inc-data').value,
     jiraKey, jiraUrl: jiraKey ? autoJiraUrl(jiraKey) : document.getElementById('inc-jiraurl').value.trim(),
     descricao: document.getElementById('inc-descricao').value.trim(),
     impacto: document.getElementById('inc-impacto').value.trim(),
@@ -1126,7 +1130,7 @@ function openIncDetail(id){
   document.getElementById('incd-title').textContent = x.titulo;
   document.getElementById('incd-meta').innerHTML = `
     <span class="badge ${x.status==='Resolvido'?'badge-green':x.status==='Investigando'?'badge-amber':'badge-blue'}">${x.status}</span>
-    <span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>`;
+    <span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">Data: ${fmtDataBR(x.dataIncidente)}</span>`:''}`;
   const jw = document.getElementById('incd-jira-wrap');
   jw.innerHTML = x.jiraUrl ? `<a class="jira-link" href="${x.jiraUrl}" target="_blank" rel="noopener">Abrir no Jira &rarr;</a>` : '';
   toggleSection('incd-desc-wrap','incd-desc', x.descricao);
