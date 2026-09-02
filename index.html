@@ -93,6 +93,13 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .stat-card .lbl{font-size:12px;color:var(--ink-soft);margin-top:7px;}
 
 .toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
+.inc-stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:20px;}
+.inc-stat-card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 16px;box-shadow:var(--shadow-sm);}
+.inc-stat-card .num{font-family:'Sora',sans-serif;font-size:21px;font-weight:700;line-height:1;}
+.inc-stat-card .lbl{font-size:11.5px;color:var(--ink-soft);margin-top:6px;}
+.date-range-group{display:flex;align-items:center;gap:6px;}
+.date-range-group input[type=date]{padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:12px;font-family:'Inter',sans-serif;background:var(--card);color:var(--ink);}
+.date-range-sep{font-size:11.5px;color:var(--ink-mute);}
 .tb-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
 .tb-filters select,.tb-filters input[type=text]{padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:12.5px;font-family:'Inter',sans-serif;background:var(--card);color:var(--ink);}
 .tb-filters input[type=text]{min-width:200px;}
@@ -281,15 +288,36 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
           <h1>Incidentes</h1>
           <p>Abertura e acompanhamento de problemas identificados em produção ou homologação.</p>
         </div>
-        <button class="btn btn-primary" id="btn-new-inc">+ Abrir incidente</button>
+        <div style="display:flex;gap:10px;">
+          <button class="btn btn-ghost" id="btn-export-inc">Exportar</button>
+          <button class="btn btn-primary" id="btn-new-inc">+ Abrir incidente</button>
+        </div>
       </div>
+      <div class="inc-stats-row" id="inc-stats"></div>
       <div class="toolbar">
         <div class="tb-filters">
-          <input type="text" id="inc-search" placeholder="Buscar por título ou chave Jira...">
+          <input type="text" id="inc-search" placeholder="Buscar por título, chave Jira, solicitante ou protocolo...">
           <select id="inc-f-empresa"><option value="">Todas as empresas</option><option>LinkPay</option><option>Infiniti</option><option>Ambos</option></select>
           <select id="inc-f-sistema"><option value="">Todos os sistemas</option><option>ADMIN</option><option>B2B</option><option>B2C</option></select>
           <select id="inc-f-sev"><option value="">Toda severidade</option><option value="Highest">Altíssima</option><option value="High">Alta</option><option value="Medium">Média</option><option value="Low">Baixa</option><option value="Lowest">Baixíssima</option></select>
           <select id="inc-f-status"><option value="">Todos os status</option><option>Aberto</option><option>Investigando</option><option>Resolvido</option></select>
+          <select id="inc-f-categoria">
+            <option value="">Toda categoria</option>
+            <option>Baixa/status de pagamento de boletos</option>
+            <option>Transferências e PIX</option>
+            <option>Erros de interface do portal</option>
+            <option>Mensageria (e-mails e tokens)</option>
+            <option>Integração API / CV CRM</option>
+            <option>Cadastro de beneficiários</option>
+            <option>Configuração bancária</option>
+            <option>Outros</option>
+          </select>
+          <span class="date-range-group">
+            <input type="date" id="inc-f-data-de" title="Data do incidente — de">
+            <span class="date-range-sep">até</span>
+            <input type="date" id="inc-f-data-ate" title="Data do incidente — até">
+          </span>
+          <button class="btn btn-ghost btn-sm" id="inc-f-clear" type="button">Limpar filtros</button>
         </div>
         <span class="results-count" id="inc-count"></span>
       </div>
@@ -534,16 +562,40 @@ function incFilters(){
     sistema: document.getElementById('inc-f-sistema').value,
     sev: document.getElementById('inc-f-sev').value,
     status: document.getElementById('inc-f-status').value,
+    categoria: document.getElementById('inc-f-categoria').value,
+    dataDe: document.getElementById('inc-f-data-de').value,
+    dataAte: document.getElementById('inc-f-data-ate').value,
   };
 }
+function renderIncStats(){
+  const abertos = incidentes.filter(x=>x.status!=='Resolvido').length;
+  const resolvidos = incidentes.filter(x=>x.status==='Resolvido').length;
+  const seteDiasAtras = Date.now() - 7*24*60*60*1000;
+  const ultimos7 = incidentes.filter(x=>x.dataRelato ? new Date(x.dataRelato).getTime()>=seteDiasAtras : (x.createdAt||0)>=seteDiasAtras).length;
+  const porCategoria = {};
+  incidentes.forEach(x=>{ if(x.categoria) porCategoria[x.categoria] = (porCategoria[x.categoria]||0)+1; });
+  const topCategoria = Object.entries(porCategoria).sort((a,b)=>b[1]-a[1])[0];
+  const cards = [
+    {num: incidentes.length, lbl:'Total de incidentes'},
+    {num: abertos, lbl:'Em aberto / investigando'},
+    {num: resolvidos, lbl:'Resolvidos'},
+    {num: ultimos7, lbl:'Reportados nos últimos 7 dias'},
+    {num: topCategoria?topCategoria[1]:0, lbl: topCategoria?('Maior categoria: '+topCategoria[0]):'Sem categorias ainda'},
+  ];
+  document.getElementById('inc-stats').innerHTML = cards.map(c=>`<div class="inc-stat-card"><div class="num">${c.num}</div><div class="lbl">${c.lbl}</div></div>`).join('');
+}
 function renderIncidentes(){
+  renderIncStats();
   const f = incFilters();
   const list = incidentes.filter(x=>{
     if(f.empresa && x.empresa!==f.empresa) return false;
     if(f.sistema && x.sistema!==f.sistema) return false;
     if(f.sev && x.severidade!==f.sev) return false;
     if(f.status && x.status!==f.status) return false;
-    if(f.search && !(x.titulo+' '+(x.jiraKey||'')).toLowerCase().includes(f.search)) return false;
+    if(f.categoria && x.categoria!==f.categoria) return false;
+    if(f.dataDe && (!x.dataIncidente || x.dataIncidente < f.dataDe)) return false;
+    if(f.dataAte && (!x.dataIncidente || x.dataIncidente > f.dataAte)) return false;
+    if(f.search && !(x.titulo+' '+(x.jiraKey||'')+' '+(x.solicitante||'')+' '+(x.protocolo||'')).toLowerCase().includes(f.search)) return false;
     return true;
   }).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
   document.getElementById('inc-count').textContent = `${list.length} de ${incidentes.length}`;
@@ -561,7 +613,38 @@ function renderIncidentes(){
       <div class="meta-row" style="margin-top:9px;"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">${fmtDataBR(x.dataIncidente)}</span>`:''}${x.categoria?`<span class="tag">${escapeHtml(x.categoria)}</span>`:''}${x.protocolo?`<span class="ref-chip">Ref: ${escapeHtml(x.protocolo)}</span>`:''}</div>
     </div>`).join('');
 }
-['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status'].forEach(id=>document.getElementById(id).addEventListener('input',renderIncidentes));
+['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status','inc-f-categoria','inc-f-data-de','inc-f-data-ate'].forEach(id=>document.getElementById(id).addEventListener('input',renderIncidentes));
+document.getElementById('inc-f-clear').addEventListener('click', ()=>{
+  ['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status','inc-f-categoria','inc-f-data-de','inc-f-data-ate'].forEach(id=>document.getElementById(id).value='');
+  renderIncidentes();
+});
+function csvEscape(v){ const s=(v==null?'':String(v)); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
+document.getElementById('btn-export-inc').addEventListener('click', ()=>{
+  const f = incFilters();
+  const list = incidentes.filter(x=>{
+    if(f.empresa && x.empresa!==f.empresa) return false;
+    if(f.sistema && x.sistema!==f.sistema) return false;
+    if(f.sev && x.severidade!==f.sev) return false;
+    if(f.status && x.status!==f.status) return false;
+    if(f.categoria && x.categoria!==f.categoria) return false;
+    if(f.dataDe && (!x.dataIncidente || x.dataIncidente < f.dataDe)) return false;
+    if(f.dataAte && (!x.dataIncidente || x.dataIncidente > f.dataAte)) return false;
+    if(f.search && !(x.titulo+' '+(x.jiraKey||'')+' '+(x.solicitante||'')+' '+(x.protocolo||'')).toLowerCase().includes(f.search)) return false;
+    return true;
+  }).sort((a,b)=>(a.dataIncidente||'').localeCompare(b.dataIncidente||''));
+  if(list.length===0){ showToast('Nenhum incidente para exportar com esses filtros'); return; }
+  const cols = ['jiraKey','titulo','empresa','sistema','severidade','status','categoria','solicitante','protocolo','dataIncidente','dataRelato','descricao','impacto'];
+  const headerLbl = {jiraKey:'Chave Jira',titulo:'Título',empresa:'Empresa',sistema:'Sistema',severidade:'Severidade',status:'Status',categoria:'Categoria',solicitante:'Solicitante',protocolo:'Protocolo',dataIncidente:'Data do incidente',dataRelato:'Data do relato',descricao:'Descrição',impacto:'Impacto'};
+  const rows = [cols.map(c=>headerLbl[c])].concat(list.map(x=>cols.map(c=>csvEscape(x[c]))));
+  const csv = '\uFEFF' + rows.map(r=>r.join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'incidentes-' + new Date().toISOString().slice(0,10) + '.csv';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  showToast(list.length + ' incidentes exportados');
+});
 
 document.getElementById('btn-new-inc').addEventListener('click', ()=>openIncForm());
 function openIncForm(editId){
