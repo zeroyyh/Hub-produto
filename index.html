@@ -113,23 +113,57 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .stat-card .num{font-family:'Sora',sans-serif;font-size:27px;font-weight:700;line-height:1;}
 .stat-card .lbl{font-size:12px;color:var(--ink-soft);margin-top:7px;}
 
-.toolbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
-.inc-stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:22px;}
-.inc-stat-card{background:linear-gradient(160deg,var(--card-2),var(--card));border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
-.inc-stat-card::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,var(--stat-glow,rgba(212,175,106,.25)),transparent 70%);}
-.inc-stat-card .stat-icon{width:26px;height:26px;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:10px;background:var(--stat-icon-bg,var(--accent-tint));color:var(--stat-icon-color,var(--accent));position:relative;}
-.inc-stat-card .stat-icon svg{width:14px;height:14px;}
-.inc-stat-card .num{font-family:'Sora',sans-serif;font-size:23px;font-weight:700;line-height:1;background:linear-gradient(135deg,#FCEFC7,var(--stat-num-c,#E8C766));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;position:relative;}
-.inc-stat-card .lbl{font-size:11.5px;color:var(--ink-soft);margin-top:7px;position:relative;}
-.date-range-group{display:flex;align-items:center;gap:6px;}
-.date-range-group input[type=date]{padding:9px 10px;border:1px solid var(--line);border-radius:9px;font-size:12px;font-family:'Inter',sans-serif;background:var(--card);color:var(--ink);}
-.date-range-sep{font-size:11.5px;color:var(--ink-mute);}
-.tb-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;}
-.tb-filters select,.tb-filters input[type=text]{padding:9px 12px;border:1px solid var(--line);border-radius:9px;font-size:12.5px;font-family:'Inter',sans-serif;background:rgba(255,255,255,.04);color:var(--ink);}
-.tb-filters input[type=text]{min-width:200px;}
-.tb-filters select{color-scheme:dark;}
-.tb-filters select option,.form-row select option{background:#1E1A12;color:#F5EFDD;}
-.results-count{font-size:12.5px;color:var(--ink-mute);}
+.form-row select option{background:#1E1A12;color:#F5EFDD;}
+
+.incidentes-shell{display:grid;grid-template-columns:226px 1fr;gap:30px;align-items:start;margin-top:6px;}
+
+.filter-rail{position:sticky;top:24px;display:flex;flex-direction:column;gap:16px;}
+.filter-rail input[type=text]{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:12.5px;font-family:'Inter',sans-serif;background:rgba(255,255,255,.03);color:var(--ink);}
+.filter-rail input[type=text]:focus{outline:none;border-color:var(--accent);}
+.filter-rail .date-range{display:flex;align-items:center;gap:6px;}
+.filter-rail .date-range input[type=date]{flex:1;min-width:0;padding:8px 8px;border:1px solid var(--line);border-radius:8px;font-size:11px;font-family:'Inter',sans-serif;background:rgba(255,255,255,.03);color:var(--ink);color-scheme:dark;}
+.filter-rail .date-range span{font-size:10.5px;color:var(--ink-mute);flex-shrink:0;}
+.facet-group{border-top:1px solid var(--line-soft);padding-top:13px;}
+.facet-group:first-of-type{border-top:none;padding-top:0;}
+.facet-title{font-size:10.5px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-mute);font-weight:700;margin-bottom:8px;}
+.facet-option{display:flex;align-items:center;gap:8px;padding:4px 2px;font-size:12.5px;color:var(--ink-soft);cursor:pointer;border-radius:6px;}
+.facet-option:hover{color:var(--ink);background:var(--line-soft);}
+.facet-option input{accent-color:var(--accent);width:13px;height:13px;flex-shrink:0;}
+.facet-option .lbl{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.facet-option .cnt{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--ink-mute);}
+.facet-option:has(input:checked){color:var(--ink);font-weight:600;}
+.facet-option:has(input:checked) .cnt{color:var(--accent);}
+.rail-clear{background:none;border:1px solid var(--line);color:var(--ink-soft);border-radius:8px;padding:8px 10px;font-size:12px;cursor:pointer;width:100%;}
+.rail-clear:hover{border-color:var(--accent-line);color:var(--ink);}
+
+.ledger-summary{font-size:12.5px;color:var(--ink-soft);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line);}
+.ledger-summary b{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:600;}
+
+.ledger-group{margin-bottom:8px;}
+.ledger-group-head{display:flex;align-items:center;gap:9px;cursor:pointer;padding:9px 2px;user-select:none;}
+.ledger-group-head .dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.ledger-group-head .lbl{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink);}
+.ledger-group-head .cnt{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-mute);}
+.ledger-group-head .chev{margin-left:auto;color:var(--ink-mute);font-size:10px;transition:transform .15s;}
+.ledger-group.collapsed .chev{transform:rotate(-90deg);}
+.ledger-group.collapsed .ledger-rows{display:none;}
+.ledger-rows{border-top:1px solid var(--line-soft);}
+
+.ledger-row{display:flex;align-items:stretch;gap:14px;padding:11px 4px;border-bottom:1px solid var(--line-soft);cursor:pointer;transition:background .1s;}
+.ledger-row:hover{background:var(--line-soft);}
+.ledger-row .tick{width:3px;border-radius:2px;flex-shrink:0;background:var(--line);}
+.ledger-row.sev-highest .tick{background:var(--red);}
+.ledger-row.sev-high .tick{background:var(--amber);}
+.ledger-row.sev-medium .tick{background:var(--accent);}
+.ledger-row .key{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-mute);width:60px;flex-shrink:0;align-self:center;}
+.ledger-row .main{flex:1;min-width:0;align-self:center;}
+.ledger-row .ttl{font-size:13.5px;font-weight:600;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ledger-row .sub{font-size:11.5px;color:var(--ink-mute);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ledger-row .sub .causa{color:#9FF3E8;}
+.ledger-row .date{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--ink-mute);flex-shrink:0;width:66px;text-align:right;align-self:center;}
+@media (max-width:720px){
+  .ledger-row .key{display:none;}
+}
 
 .doc-list{display:flex;flex-direction:column;gap:10px;}
 .doc-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 19px;box-shadow:var(--shadow-sm);cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:14px;transition:border-color .12s,transform .1s;}
@@ -154,26 +188,6 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
 .gut-chip{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;background:rgba(242,193,78,.18);color:var(--bronze);padding:3px 8px;border-radius:6px;}
 .ref-chip{font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;background:var(--bronze-tint);color:var(--bronze);padding:3px 9px;border-radius:6px;border:1px solid rgba(242,193,78,.3);}
 
-.inc-card{background:linear-gradient(160deg,var(--card-2),var(--card));border:1px solid var(--line);border-left:3px solid var(--line);border-radius:13px;padding:16px 20px;box-shadow:var(--shadow-sm);cursor:pointer;margin-bottom:10px;transition:border-color .15s,box-shadow .15s,transform .1s;}
-.inc-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);border-color:var(--accent-line);}
-.inc-card.sev-highest{border-left-color:var(--red);box-shadow:-3px 0 16px -6px rgba(255,107,133,.5);}
-.inc-card.sev-high{border-left-color:var(--amber);box-shadow:-3px 0 16px -6px rgba(242,193,78,.45);}
-.inc-card.sev-medium{border-left-color:var(--accent);box-shadow:-3px 0 16px -6px rgba(212,175,106,.4);}
-.inc-card.sev-low{border-left-color:var(--ink-mute);}
-.inc-card.sev-lowest{border-left-color:var(--line);}
-.inc-card:hover.sev-highest{box-shadow:var(--shadow-md),-3px 0 20px -4px rgba(255,107,133,.6);}
-.inc-card:hover.sev-high{box-shadow:var(--shadow-md),-3px 0 20px -4px rgba(242,193,78,.55);}
-.inc-card:hover.sev-medium{box-shadow:var(--shadow-md),-3px 0 20px -4px rgba(212,175,106,.5);}
-.inc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
-.inc-top .ttl{font-size:14.5px;font-weight:600;}
-.inc-top .num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--ink-mute);}
-
-.recurring-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;}
-.recurring-chip{display:flex;align-items:center;gap:7px;background:linear-gradient(160deg,var(--card-2),var(--card));border:1px solid var(--line);border-radius:100px;padding:7px 13px 7px 14px;cursor:pointer;font-size:12px;color:var(--ink-soft);transition:border-color .12s,color .12s,background .12s;}
-.recurring-chip:hover{border-color:var(--violet);color:var(--ink);background:rgba(45,212,191,.08);}
-.recurring-chip.active{border-color:var(--violet);color:var(--ink);background:rgba(45,212,191,.16);}
-.recurring-chip .count{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--violet);background:rgba(45,212,191,.18);border-radius:100px;min-width:20px;text-align:center;padding:1px 6px;font-size:11px;}
-.recurring-label{font-size:11px;color:var(--ink-mute);display:flex;align-items:center;margin-right:2px;white-space:nowrap;}
 
 .rules-shell{display:grid;grid-template-columns:210px 1fr;gap:22px;}
 .rules-nav{position:sticky;top:20px;align-self:start;}
@@ -289,6 +303,12 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
   .main{padding:22px 16px 70px;}
   .stats-row{grid-template-columns:repeat(2,1fr);}
   .rules-shell{grid-template-columns:1fr;}
+  .incidentes-shell{grid-template-columns:1fr;}
+  .filter-rail{position:static;flex-direction:row;flex-wrap:wrap;gap:10px 16px;}
+  .filter-rail .facet-group{border-top:none;padding-top:0;flex:1 1 140px;}
+  .filter-rail input[type=text]{flex:1 1 100%;}
+  .filter-rail .date-range{flex:1 1 100%;}
+  .rail-clear{flex:1 1 100%;}
   .form-row.two,.form-row.three,.gut-row{grid-template-columns:1fr;}
 }
 </style>
@@ -331,37 +351,22 @@ h1,h2,h3{margin:0;font-family:'Sora',sans-serif;}
           <button class="btn btn-primary" id="btn-new-inc">+ Abrir incidente</button>
         </div>
       </div>
-      <div class="inc-stats-row" id="inc-stats"></div>
-      <div class="recurring-row" id="inc-recurring"></div>
-      <div class="toolbar">
-        <div class="tb-filters">
-          <input type="text" id="inc-search" placeholder="Buscar por título, chave Jira, solicitante ou protocolo...">
-          <select id="inc-f-empresa"><option value="">Todas as empresas</option><option>LinkPay</option><option>Infiniti</option><option>Ambos</option></select>
-          <select id="inc-f-sistema"><option value="">Todos os sistemas</option><option>ADMIN</option><option>B2B</option><option>B2C</option></select>
-          <select id="inc-f-sev"><option value="">Toda severidade</option><option value="Highest">Altíssima</option><option value="High">Alta</option><option value="Medium">Média</option><option value="Low">Baixa</option><option value="Lowest">Baixíssima</option></select>
-          <select id="inc-f-status"><option value="">Todos os status</option><option>Aberto</option><option>Investigando</option><option>Resolvido</option></select>
-          <select id="inc-f-categoria">
-            <option value="">Toda categoria</option>
-            <option>Baixa/status de pagamento de boletos</option>
-            <option>Transferências e PIX</option>
-            <option>Erros de interface do portal</option>
-            <option>Mensageria (e-mails e tokens)</option>
-            <option>Integração API / CV CRM</option>
-            <option>Cadastro de beneficiários</option>
-            <option>Configuração bancária</option>
-            <option>Outros</option>
-          </select>
-          <select id="inc-f-causa"><option value="">Toda causa recorrente</option></select>
-          <span class="date-range-group">
+      <div class="incidentes-shell">
+        <aside class="filter-rail" id="inc-filter-rail">
+          <input type="text" id="inc-search" placeholder="Buscar título, chave Jira, protocolo...">
+          <div class="date-range">
             <input type="date" id="inc-f-data-de" title="Data do incidente — de">
-            <span class="date-range-sep">até</span>
+            <span>até</span>
             <input type="date" id="inc-f-data-ate" title="Data do incidente — até">
-          </span>
-          <button class="btn btn-ghost btn-sm" id="inc-f-clear" type="button">Limpar filtros</button>
+          </div>
+          <div id="inc-facets"></div>
+          <button class="rail-clear" id="inc-f-clear" type="button">Limpar filtros</button>
+        </aside>
+        <div class="inc-content">
+          <div class="ledger-summary" id="inc-count"></div>
+          <div id="inc-list"></div>
         </div>
-        <span class="results-count" id="inc-count"></span>
       </div>
-      <div id="inc-list"></div>
     </div>
 
   </main>
@@ -508,7 +513,6 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const KEYS = { incidentes:'portal-incidentes-v2' };
 let incidentes = [];
 let currentIncId=null;
-let activeRecurring = '';
 
 function uid(){ return 'x'+Date.now().toString(36)+Math.random().toString(36).slice(2,7); }
 function escapeHtml(str){ const d=document.createElement('div'); d.textContent=str||''; return d.innerHTML; }
@@ -598,46 +602,23 @@ function renderTimelineGeneric(el, timeline){
 }
 /* ================= INCIDENTES ================= */
 const SEV_LABELS = { Highest:'Altíssima', High:'Alta', Medium:'Média', Low:'Baixa', Lowest:'Baixíssima' };
+const CATEGORIAS = ['Baixa/status de pagamento de boletos','Transferências e PIX','Erros de interface do portal','Mensageria (e-mails e tokens)','Integração API / CV CRM','Cadastro de beneficiários','Configuração bancária','Outros'];
+const STATUS_ORDER = [ {key:'Aberto', dot:'var(--red)'}, {key:'Investigando', dot:'var(--amber)'}, {key:'Resolvido', dot:'var(--green)'} ];
+const FACET_DEFS = [
+  {key:'status', field:'status', label:'Status', options:['Aberto','Investigando','Resolvido']},
+  {key:'empresa', field:'empresa', label:'Empresa', options:['LinkPay','Infiniti','Ambos']},
+  {key:'sistema', field:'sistema', label:'Sistema', options:['ADMIN','B2B','B2C']},
+  {key:'sev', field:'severidade', label:'Severidade', options:[['Highest','Altíssima'],['High','Alta'],['Medium','Média'],['Low','Baixa'],['Lowest','Baixíssima']]},
+  {key:'categoria', field:'categoria', label:'Categoria', options:CATEGORIAS},
+  {key:'causa', field:'causaRecorrente', label:'Causa recorrente', options:null},
+];
 function fmtDataBR(iso){ if(!iso) return ''; const p = iso.split('-'); return p.length===3 ? `${p[2]}/${p[1]}/${p[0]}` : iso; }
 function sevClass(s){ return 'sev-'+ (s||'medium').toLowerCase(); }
 function sevLabel(s){ return SEV_LABELS[s] || s; }
-function incFilters(){
-  return {
-    search: document.getElementById('inc-search').value.toLowerCase(),
-    empresa: document.getElementById('inc-f-empresa').value,
-    sistema: document.getElementById('inc-f-sistema').value,
-    sev: document.getElementById('inc-f-sev').value,
-    status: document.getElementById('inc-f-status').value,
-    categoria: document.getElementById('inc-f-categoria').value,
-    causa: document.getElementById('inc-f-causa').value,
-    dataDe: document.getElementById('inc-f-data-de').value,
-    dataAte: document.getElementById('inc-f-data-ate').value,
-  };
-}
-function renderIncStats(){
-  const abertos = incidentes.filter(x=>x.status!=='Resolvido').length;
-  const resolvidos = incidentes.filter(x=>x.status==='Resolvido').length;
-  const seteDiasAtras = Date.now() - 7*24*60*60*1000;
-  const ultimos7 = incidentes.filter(x=>x.dataRelato ? new Date(x.dataRelato).getTime()>=seteDiasAtras : (x.createdAt||0)>=seteDiasAtras).length;
-  const porCategoria = {};
-  incidentes.forEach(x=>{ if(x.categoria) porCategoria[x.categoria] = (porCategoria[x.categoria]||0)+1; });
-  const topCategoria = Object.entries(porCategoria).sort((a,b)=>b[1]-a[1])[0];
-  const ICONS = {
-    total: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 3h6v4H9z"/><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 13h6M9 17h4"/></svg>',
-    aberto: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r="0.6" fill="currentColor"/></svg>',
-    resolvido: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m5 13 4 4L19 7"/></svg>',
-    tempo: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>',
-    categoria: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h6l2 3h8v11H4z"/></svg>',
-  };
-  const cards = [
-    {num: incidentes.length, lbl:'Total de incidentes', icon:ICONS.total, glow:'rgba(212,175,106,.3)', iconBg:'var(--accent-tint)', iconColor:'var(--accent)', numC:'#E8C766'},
-    {num: abertos, lbl:'Em aberto / investigando', icon:ICONS.aberto, glow:'rgba(255,107,107,.28)', iconBg:'var(--red-tint)', iconColor:'var(--red)', numC:'#FFB3B3'},
-    {num: resolvidos, lbl:'Resolvidos', icon:ICONS.resolvido, glow:'rgba(61,220,151,.28)', iconBg:'var(--green-tint)', iconColor:'var(--green)', numC:'#9DF0CB'},
-    {num: ultimos7, lbl:'Reportados nos últimos 7 dias', icon:ICONS.tempo, glow:'rgba(242,193,78,.28)', iconBg:'var(--bronze-tint)', iconColor:'var(--bronze)', numC:'#F7D19E'},
-    {num: topCategoria?topCategoria[1]:0, lbl: topCategoria?('Maior categoria: '+topCategoria[0]):'Sem categorias ainda', icon:ICONS.categoria, glow:'rgba(45,212,191,.28)', iconBg:'var(--violet-tint)', iconColor:'var(--violet)', numC:'#8EEAE0'},
-  ];
-  document.getElementById('inc-stats').innerHTML = cards.map(c=>`<div class="inc-stat-card" style="--stat-glow:${c.glow};--stat-icon-bg:${c.iconBg};--stat-icon-color:${c.iconColor};--stat-num-c:${c.numC};"><div class="stat-icon">${c.icon}</div><div class="num">${c.num}</div><div class="lbl">${c.lbl}</div></div>`).join('');
-}
+
+let filterState = { search:'', dataDe:'', dataAte:'', empresa:new Set(), sistema:new Set(), sev:new Set(), status:new Set(), categoria:new Set(), causa:new Set() };
+let collapsedGroups = new Set();
+
 function allCausas(){
   const set = new Set();
   incidentes.forEach(x=>{ if(x.causaRecorrente) set.add(x.causaRecorrente); });
@@ -646,81 +627,93 @@ function allCausas(){
 function renderCausaDatalist(){
   document.getElementById('inc-causa-list').innerHTML = allCausas().map(c=>`<option value="${escapeHtml(c)}">`).join('');
 }
-function renderCausaFilterOptions(){
-  const sel = document.getElementById('inc-f-causa');
-  const current = sel.value;
-  sel.innerHTML = '<option value="">Toda causa recorrente</option>' + allCausas().map(c=>`<option ${c===current?'selected':''}>${escapeHtml(c)}</option>`).join('');
+function matchesFilters(x, exceptKey){
+  for(const f of FACET_DEFS){
+    if(f.key===exceptKey) continue;
+    const set = filterState[f.key];
+    if(set.size && !set.has(x[f.field])) return false;
+  }
+  if(filterState.dataDe && (!x.dataIncidente || x.dataIncidente < filterState.dataDe)) return false;
+  if(filterState.dataAte && (!x.dataIncidente || x.dataIncidente > filterState.dataAte)) return false;
+  if(filterState.search && !(x.titulo+' '+(x.jiraKey||'')+' '+(x.solicitante||'')+' '+(x.protocolo||'')).toLowerCase().includes(filterState.search)) return false;
+  return true;
 }
-function renderRecurringRow(){
-  const porCausa = {};
-  incidentes.forEach(x=>{ if(x.causaRecorrente) porCausa[x.causaRecorrente] = (porCausa[x.causaRecorrente]||0)+1; });
-  const top = Object.entries(porCausa).filter(([,n])=>n>=2).sort((a,b)=>b[1]-a[1]).slice(0,6);
-  const box = document.getElementById('inc-recurring');
-  if(top.length===0){ box.innerHTML=''; return; }
-  box.innerHTML = '<span class="recurring-label">Causas recorrentes:</span>' + top.map(([causa,n])=>
-    `<div class="recurring-chip ${activeRecurring===causa?'active':''}" data-causa="${escapeHtml(causa)}"><span>${escapeHtml(causa)}</span><span class="count">${n}</span></div>`
-  ).join('');
-  box.querySelectorAll('.recurring-chip').forEach(chip=>chip.addEventListener('click', ()=>{
-    const c = chip.dataset.causa;
-    activeRecurring = (activeRecurring===c) ? '' : c;
-    document.getElementById('inc-f-causa').value = activeRecurring;
-    renderIncidentes();
-  }));
+function filteredIncidentes(){ return incidentes.filter(x=>matchesFilters(x, null)); }
+function renderFacets(){
+  const html = FACET_DEFS.map(f=>{
+    const opts = f.key==='causa' ? allCausas() : f.options;
+    const rows = opts.map(o=>{
+      const val = Array.isArray(o) ? o[0] : o;
+      const lbl = Array.isArray(o) ? o[1] : o;
+      const count = incidentes.filter(x=>x[f.field]===val && matchesFilters(x, f.key)).length;
+      if(f.key==='causa' && count===0) return '';
+      const checked = filterState[f.key].has(val);
+      return `<label class="facet-option"><input type="checkbox" data-facet="${f.key}" value="${escapeHtml(val)}" ${checked?'checked':''}><span class="lbl">${escapeHtml(lbl)}</span><span class="cnt">${count}</span></label>`;
+    }).filter(Boolean).join('');
+    if(!rows) return '';
+    return `<div class="facet-group"><div class="facet-title">${f.label}</div>${rows}</div>`;
+  }).join('');
+  document.getElementById('inc-facets').innerHTML = html;
+}
+document.getElementById('inc-facets').addEventListener('change', (e)=>{
+  const t = e.target; if(t.tagName!=='INPUT') return;
+  const key = t.dataset.facet;
+  if(t.checked) filterState[key].add(t.value); else filterState[key].delete(t.value);
+  renderIncidentes();
+});
+document.getElementById('inc-search').addEventListener('input', ()=>{ filterState.search = document.getElementById('inc-search').value.toLowerCase(); renderIncidentes(); });
+document.getElementById('inc-f-data-de').addEventListener('input', ()=>{ filterState.dataDe = document.getElementById('inc-f-data-de').value; renderIncidentes(); });
+document.getElementById('inc-f-data-ate').addEventListener('input', ()=>{ filterState.dataAte = document.getElementById('inc-f-data-ate').value; renderIncidentes(); });
+document.getElementById('inc-f-clear').addEventListener('click', ()=>{
+  filterState = { search:'', dataDe:'', dataAte:'', empresa:new Set(), sistema:new Set(), sev:new Set(), status:new Set(), categoria:new Set(), causa:new Set() };
+  document.getElementById('inc-search').value='';
+  document.getElementById('inc-f-data-de').value='';
+  document.getElementById('inc-f-data-ate').value='';
+  renderIncidentes();
+});
+function toggleGroup(key){
+  if(collapsedGroups.has(key)) collapsedGroups.delete(key); else collapsedGroups.add(key);
+  renderIncidentes();
 }
 function renderIncidentes(){
-  renderIncStats();
   renderCausaDatalist();
-  renderCausaFilterOptions();
-  renderRecurringRow();
-  const f = incFilters();
-  const list = incidentes.filter(x=>{
-    if(f.empresa && x.empresa!==f.empresa) return false;
-    if(f.sistema && x.sistema!==f.sistema) return false;
-    if(f.sev && x.severidade!==f.sev) return false;
-    if(f.status && x.status!==f.status) return false;
-    if(f.categoria && x.categoria!==f.categoria) return false;
-    if(f.causa && x.causaRecorrente!==f.causa) return false;
-    if(f.dataDe && (!x.dataIncidente || x.dataIncidente < f.dataDe)) return false;
-    if(f.dataAte && (!x.dataIncidente || x.dataIncidente > f.dataAte)) return false;
-    if(f.search && !(x.titulo+' '+(x.jiraKey||'')+' '+(x.solicitante||'')+' '+(x.protocolo||'')).toLowerCase().includes(f.search)) return false;
-    return true;
-  }).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
-  document.getElementById('inc-count').textContent = `${list.length} de ${incidentes.length}`;
+  renderFacets();
+  const list = filteredIncidentes().sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0));
+  const countBox = document.getElementById('inc-count');
+  countBox.innerHTML = incidentes.length===0 ? '' : `<b>${list.length}</b> de <b>${incidentes.length}</b> incidentes`;
   const box = document.getElementById('inc-list');
   if(list.length===0){
     box.innerHTML = `<div class="empty"><h3>${incidentes.length===0?'Nenhum incidente registrado':'Nada encontrado'}</h3><p>${incidentes.length===0?'Registre um problema para começar a acompanhar.':'Ajuste os filtros ou a busca.'}</p></div>`;
     return;
   }
-  box.innerHTML = list.map(x=>`
-    <div class="inc-card ${sevClass(x.severidade)}" onclick="openIncDetail('${x.id}')">
-      <div class="inc-top">
-        <div><div class="num mono">${(x.jiraKey||'sem chave').toUpperCase()}</div><div class="ttl">${escapeHtml(x.titulo)}</div></div>
-        <span class="badge ${x.status==='Resolvido'?'badge-green':x.status==='Investigando'?'badge-amber':'badge-blue'}">${x.status}</span>
+  box.innerHTML = STATUS_ORDER.map(g=>{
+    const items = list.filter(x=>x.status===g.key);
+    if(items.length===0) return '';
+    const collapsed = collapsedGroups.has(g.key);
+    const rows = items.map(x=>`
+      <div class="ledger-row ${sevClass(x.severidade)}" onclick="openIncDetail('${x.id}')">
+        <span class="tick"></span>
+        <span class="key mono">${(x.jiraKey||'—').toUpperCase()}</span>
+        <div class="main">
+          <div class="ttl">${escapeHtml(x.titulo)}</div>
+          <div class="sub">${x.empresa} · ${x.sistema}${x.categoria?' · '+escapeHtml(x.categoria):''}${x.causaRecorrente?` · <span class="causa">${escapeHtml(x.causaRecorrente)}</span>`:''}${x.protocolo?' · Ref: '+escapeHtml(x.protocolo):''}</div>
+        </div>
+        <span class="date mono">${fmtDataBR(x.dataIncidente)}</span>
+      </div>`).join('');
+    return `<div class="ledger-group ${collapsed?'collapsed':''}" data-group="${g.key}">
+      <div class="ledger-group-head" onclick="toggleGroup('${g.key}')">
+        <span class="dot" style="background:${g.dot}"></span>
+        <span class="lbl">${g.key}</span>
+        <span class="cnt">${items.length}</span>
+        <span class="chev">▾</span>
       </div>
-      <div class="meta-row" style="margin-top:9px;"><span class="tag ${empresaTagClass(x.empresa)}">${x.empresa}</span><span class="tag">${x.sistema}</span><span class="tag">${sevLabel(x.severidade)}</span>${x.dataIncidente?`<span class="tag mono">${fmtDataBR(x.dataIncidente)}</span>`:''}${x.categoria?`<span class="tag">${escapeHtml(x.categoria)}</span>`:''}${x.causaRecorrente?`<span class="tag tag-causa">${escapeHtml(x.causaRecorrente)}</span>`:''}${x.protocolo?`<span class="ref-chip">Ref: ${escapeHtml(x.protocolo)}</span>`:''}</div>
-    </div>`).join('');
+      <div class="ledger-rows">${rows}</div>
+    </div>`;
+  }).join('');
 }
-['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status','inc-f-categoria','inc-f-causa','inc-f-data-de','inc-f-data-ate'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{ if(id==='inc-f-causa') activeRecurring = document.getElementById('inc-f-causa').value; renderIncidentes(); }));
-document.getElementById('inc-f-clear').addEventListener('click', ()=>{
-  ['inc-search','inc-f-empresa','inc-f-sistema','inc-f-sev','inc-f-status','inc-f-categoria','inc-f-causa','inc-f-data-de','inc-f-data-ate'].forEach(id=>document.getElementById(id).value='');
-  activeRecurring = '';
-  renderIncidentes();
-});
 function csvEscape(v){ const s=(v==null?'':String(v)); return /[",\n]/.test(s) ? '"'+s.replace(/"/g,'""')+'"' : s; }
 document.getElementById('btn-export-inc').addEventListener('click', ()=>{
-  const f = incFilters();
-  const list = incidentes.filter(x=>{
-    if(f.empresa && x.empresa!==f.empresa) return false;
-    if(f.sistema && x.sistema!==f.sistema) return false;
-    if(f.sev && x.severidade!==f.sev) return false;
-    if(f.status && x.status!==f.status) return false;
-    if(f.categoria && x.categoria!==f.categoria) return false;
-    if(f.causa && x.causaRecorrente!==f.causa) return false;
-    if(f.dataDe && (!x.dataIncidente || x.dataIncidente < f.dataDe)) return false;
-    if(f.dataAte && (!x.dataIncidente || x.dataIncidente > f.dataAte)) return false;
-    if(f.search && !(x.titulo+' '+(x.jiraKey||'')+' '+(x.solicitante||'')+' '+(x.protocolo||'')).toLowerCase().includes(f.search)) return false;
-    return true;
-  }).sort((a,b)=>(a.dataIncidente||'').localeCompare(b.dataIncidente||''));
+  const list = filteredIncidentes().sort((a,b)=>(a.dataIncidente||'').localeCompare(b.dataIncidente||''));
   if(list.length===0){ showToast('Nenhum incidente para exportar com esses filtros'); return; }
   const cols = ['jiraKey','titulo','empresa','sistema','severidade','status','categoria','causaRecorrente','solicitante','protocolo','dataIncidente','dataRelato','descricao','impacto'];
   const headerLbl = {jiraKey:'Chave Jira',titulo:'Título',empresa:'Empresa',sistema:'Sistema',severidade:'Severidade',status:'Status',categoria:'Categoria',causaRecorrente:'Causa recorrente',solicitante:'Solicitante',protocolo:'Protocolo',dataIncidente:'Data do incidente',dataRelato:'Data do relato',descricao:'Descrição',impacto:'Impacto'};
